@@ -2,49 +2,55 @@
 
 import 'package:flutter/material.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
-import 'package:sewakantor_flutter/ui/pages/signup_page.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_button_icon.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_button_text.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_text_form_field.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUpPage> createState() => SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class SignUpPageState extends State<SignUpPage> {
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size);
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints:
-              BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 30),
+      body: ListView(
+        children: [
+          Container(
+            // padding: const EdgeInsets.only(top: 30),
+            height: MediaQuery.of(context).size.height,
+            constraints: BoxConstraints(
+                // maxHeight: MediaQuery.of(context).size.height,
+                // maxWidth: MediaQuery.of(context).size.width,
+                ),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
+              // mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 60),
-                  height: 100,
-                  width: 100,
+                  margin: EdgeInsets.only(
+                    top: 30 + 24,
+                    left: 115 + 40,
+                    right: 115 + 40,
+                    bottom: 26,
+                  ),
+                  height: 40,
+                  width: double.infinity,
                   decoration: BoxDecoration(
-                    color: primaryColorNobel,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
-                    ),
+                    color: primaryColorWhisper,
                   ),
                 ),
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.only(
+                      top: 50,
                       right: 40,
                       left: 40,
                       bottom: 40,
@@ -60,14 +66,19 @@ class _LoginPageState extends State<LoginPage> {
                       key: formKey,
                       child: Column(
                         children: [
-                          Container(
-                            margin:
-                                EdgeInsets.only(top: 24, left: 115, right: 115),
-                            height: 40,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: primaryColorWhisper,
-                            ),
+                          CustomTextFormField(
+                            title: 'First Name',
+                            hintText: 'Enter your first name',
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          CustomTextFormField(
+                            title: 'Last Name',
+                            hintText: 'Enter your last name',
+                          ),
+                          SizedBox(
+                            height: 20,
                           ),
                           CustomTextFormField(
                             title: 'Email',
@@ -85,34 +96,21 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                           SizedBox(
-                            height: 26,
+                            height: 20,
                           ),
                           CustomTextFormField(
                             title: 'Password',
                             hintText: 'Enter your password',
-                            isPasswordField: true,
                           ),
                           SizedBox(
-                            height: 6,
+                            height: 20,
                           ),
-                          InkWell(
-                            onTap: () {},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'Forgot your password?',
-                                  style: primaryTextStyle.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: bold,
-                                    color: primaryColorWhite,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          CustomTextFormField(
+                            title: 'Confirrm Password',
+                            hintText: 'Enter your confirm password',
                           ),
                           SizedBox(
-                            height: 32,
+                            height: 20,
                           ),
                           CustomButtonText(
                             text: '',
@@ -121,17 +119,15 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(
                             height: 20,
                           ),
-                          GestureDetector(
+                          InkWell(
                             onTap: () {
-                              Navigator.pushNamed(context, '/signup-page');
-
-                              print('signup page');
+                              Navigator.pop(context);
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Don\'t have any account? ',
+                                  'Already have any account? ',
                                   style: primaryTextStyle.copyWith(
                                     fontSize: 14,
                                     fontWeight: semiBold,
@@ -139,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                                 Text(
-                                  ' Sign Up',
+                                  ' Login',
                                   style: primaryTextStyle.copyWith(
                                     fontSize: 14,
                                     fontWeight: semiBold,
@@ -173,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -1,6 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:sewakantor_flutter/ui/pages/home_page.dart';
 import 'package:sewakantor_flutter/ui/pages/login_page.dart';
+import 'package:sewakantor_flutter/ui/pages/signup_page.dart';
 import 'package:sewakantor_flutter/ui/splash/splash_screen.dart';
 
 void main() {
@@ -21,6 +24,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => SplashScreen(),
         '/home-page': (context) => HomePage(),
         '/login-page': (context) => LoginPage(),
+        '/signup-page': (context) => SignUpPage(),
       },
     );
   }

@@ -37,6 +37,8 @@ dependencies:
   google_fonts: ^3.0.1
   animated_splash_screen: ^1.2.0
   page_transition: ^2.0.5
+  provider: ^6.0.3
+
 
   
 
@@ -66,6 +68,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icon/
+    - assets/icon/profile_page/
     - assets/logo/
     - assets/wireframe/
 

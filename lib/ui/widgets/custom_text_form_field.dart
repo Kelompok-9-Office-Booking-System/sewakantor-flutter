@@ -5,13 +5,21 @@ import 'package:sewakantor_flutter/shared/theme.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final String title;
+  final Color colorTitle;
+  final Color colorBorder;
   final String hintText;
+  final Color colorHintText;
+  final TextEditingController? controller;
   final String? Function(String?)? validator;
   final bool isPasswordField;
 
   const CustomTextFormField({
     required this.title,
+    required this.colorTitle,
+    required this.colorBorder,
     required this.hintText,
+    required this.colorHintText,
+    this.controller,
     this.validator,
     this.isPasswordField = false,
     Key? key,
@@ -36,7 +44,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             style: primaryTextStyle.copyWith(
               fontSize: 14,
               fontWeight: bold,
-              color: primaryColorWhite,
+              color: widget.colorTitle,
             ),
           ),
           SizedBox(
@@ -53,7 +61,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                 10,
               ),
               border: Border.all(
-                color: primaryColorWhite,
+                color: widget.colorBorder,
                 width: 1.5,
               ),
             ),
@@ -61,50 +69,82 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               child: Row(
                 children: [
                   Expanded(
-                    child: TextFormField(
-                      obscureText:
-                          !widget.isPasswordField ? false : hidePassword,
-                      // controller: emailController,
-                      style: primaryTextStyle.copyWith(
-                        color: primaryColorWhite,
-                      ),
-                      decoration: InputDecoration(
-                        suffixIcon: !widget.isPasswordField
-                            ? null
-                            : IconButton(
-                                onPressed: () {
-                                  // Update the state i.e. toogle the state of hidePassword variable
-                                  setState(() {
-                                    hidePassword = !hidePassword;
-                                  });
-                                },
-                                icon: Icon(
-                                  // Based on hidePassword state choose the icon
-                                  hidePassword
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: Colors.black,
-                                ),
-                              ),
-                        hintText: widget.hintText,
-                        hintStyle: primaryTextStyle.copyWith(
-                          // fontSize: 14,
-                          fontWeight: medium,
-                          color: primaryColorWhite.withOpacity(0.4),
-                        ),
-                      ),
+                    child: Stack(
+                      children: [
+                        TextFormField(
+                          controller: widget.controller,
+                          obscureText:
+                              !widget.isPasswordField ? false : hidePassword,
+                          // controller: emailController,
+                          style: primaryTextStyle.copyWith(
+                            color: primaryColorWhite,
+                          ),
+                          decoration: InputDecoration(
+                            isCollapsed: true,
+                            border: InputBorder.none,
+                            // contentPadding: EdgeInsets.only(top: 10),
+                            focusedBorder: InputBorder.none,
 
-                      validator: widget.validator,
-                      // (value) {
-                      //   if (value!.isEmpty) {
-                      //     return "Email Required";
-                      //   } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                      //       .hasMatch(value)) {
-                      //     return 'Enter Correct Email';
-                      //   } else {
-                      //     return null;
-                      //   }
-                      // },
+                            // suffixIcon: !widget.isPasswordField
+                            //     ? null
+                            //     : IconButton(
+                            //         onPressed: () {
+                            //           // Update the state i.e. toogle the state of hidePassword variable
+                            //           setState(() {
+                            //             hidePassword = !hidePassword;
+                            //           });
+                            //         },
+                            //         icon: Icon(
+                            //           // Based on hidePassword state choose the icon
+                            //           hidePassword
+                            //               ? Icons.visibility_off
+                            //               : Icons.visibility,
+                            //           color: Colors.black,
+                            //         ),
+                            //       ),
+                            hintText: widget.hintText,
+                            hintStyle: primaryTextStyle.copyWith(
+                              // fontSize: 14,
+                              fontWeight: medium,
+                              color: widget.colorHintText,
+                            ),
+                          ),
+
+                          validator: widget.validator,
+                          // (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "Email Required";
+                          //   } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                          //       .hasMatch(value)) {
+                          //     return 'Enter Correct Email';
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                        ),
+                        Positioned(
+                          top: -10,
+                          right: -10,
+                          bottom: -10,
+                          child: !widget.isPasswordField
+                              ? SizedBox()
+                              : IconButton(
+                                  onPressed: () {
+                                    // Update the state i.e. toogle the state of hidePassword variable
+                                    setState(() {
+                                      hidePassword = !hidePassword;
+                                    });
+                                  },
+                                  icon: Icon(
+                                    // Based on hidePassword state choose the icon
+                                    hidePassword
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

@@ -15,162 +15,214 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailController = TextEditingController(text: '');
+
+  TextEditingController passwordController = TextEditingController(text: '');
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    handleSignIn() async {
+      try {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.greenAccent,
+            content: Text(
+              'Berhasil Login',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+        Future.delayed(Duration(seconds: 3), () async {
+          await Navigator.pushNamedAndRemoveUntil(
+              context, '/main-page', (route) => false);
+        });
+      } catch (e) {}
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints:
-              BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 60),
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: primaryColorNobel,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
+      body: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints:
+                BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 60),
+                    width: 50,
+                    child: Image.asset(
+                      'assets/wireframe/logo_splash_wf.png',
+                      scale: 2,
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      right: 40,
-                      left: 40,
-                      bottom: 40,
-                    ),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: primaryColorNobel,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(100),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        right: 40,
+                        left: 40,
+                        bottom: 40,
                       ),
-                    ),
-                    child: Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          Container(
-                            margin:
-                                EdgeInsets.only(top: 24, left: 115, right: 115),
-                            height: 40,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: primaryColorWhisper,
-                            ),
-                          ),
-                          CustomTextFormField(
-                            title: 'Email',
-                            hintText: 'Enter your email',
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Email Required";
-                              } else if (!RegExp(
-                                      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                                  .hasMatch(value)) {
-                                return 'Enter Correct Email';
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 26,
-                          ),
-                          CustomTextFormField(
-                            title: 'Password',
-                            hintText: 'Enter your password',
-                            isPasswordField: true,
-                          ),
-                          SizedBox(
-                            height: 6,
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'Forgot your password?',
-                                  style: primaryTextStyle.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: bold,
-                                    color: primaryColorWhite,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: primaryColorMidnightExpress,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(100),
+                        ),
+                      ),
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                  top: 24, left: 115, right: 115),
+                              height: 40,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  // color: primaryColorWhisper,
                                   ),
+                              child: Text(
+                                'Login',
+                                style: primaryTextStyle.copyWith(
+                                  fontSize: 24,
+                                  fontWeight: semiBold,
+                                  color: secondaryColorWhite,
                                 ),
-                              ],
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 32,
-                          ),
-                          CustomButtonText(
-                            text: '',
-                            onPrressed: () {},
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/signup-page');
+                            SizedBox(
+                              height: 26,
+                            ),
+                            CustomTextFormField(
+                              title: 'Email',
+                              hintText: 'Enter your email',
+                              colorTitle: primaryColorWhite,
+                              colorBorder: primaryColorWhite,
+                              colorHintText: primaryColorWhite.withOpacity(0.4),
+                              controller: emailController,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Email Required";
+                                } else if (!RegExp(
+                                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                                    .hasMatch(value)) {
+                                  return 'Enter Correct Email';
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              height: 26,
+                            ),
+                            CustomTextFormField(
+                              title: 'Password',
+                              hintText: 'Enter your password',
+                              colorTitle: primaryColorWhite,
+                              colorBorder: primaryColorWhite,
+                              colorHintText: primaryColorWhite.withOpacity(0.4),
+                              controller: passwordController,
+                              isPasswordField: true,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Password Required";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              height: 6,
+                            ),
+                            InkWell(
+                              onTap: () {},
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Forgot your password?',
+                                    style: primaryTextStyle.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: bold,
+                                      color: primaryColorWhite,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 32,
+                            ),
+                            CustomButtonText(
+                              text: 'Login',
+                              onPrressed: () {
+                                if (formKey.currentState!.validate()) {
+                                  handleSignIn();
+                                }
+                                FocusManager.instance.primaryFocus?.unfocus();
+                              },
+                              bgColor: primaryColorBlackRussian,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/signup-page');
 
-                              print('signup page');
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Don\'t have any account? ',
-                                  style: primaryTextStyle.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: semiBold,
-                                    color: primaryColorWhite,
+                                print('signup page');
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Don\'t have any account? ',
+                                    style: primaryTextStyle.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: semiBold,
+                                      color: primaryColorWhite,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  ' Sign Up',
-                                  style: primaryTextStyle.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: semiBold,
-                                    color: Colors.black,
+                                  Text(
+                                    ' Sign Up',
+                                    style: primaryTextStyle.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: semiBold,
+                                      color: primaryColorWhite,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          CustomButtonIcon(
-                            text: 'Login with Google',
-                            imageAsset: 'assets/icon/google_icon.png',
-                            onPrressed: () {},
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          CustomButtonIcon(
-                            text: 'Login with Apple ID',
-                            imageAsset: 'assets/icon/apple_icon.png',
-                            onPrressed: () {},
-                          ),
-                        ],
+                            SizedBox(
+                              height: 15,
+                            ),
+                            CustomButtonIcon(
+                              text: 'Login with Google',
+                              imageAsset: 'assets/icon/google_icon.png',
+                              onPrressed: () {
+                                handleSignIn();
+                              },
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

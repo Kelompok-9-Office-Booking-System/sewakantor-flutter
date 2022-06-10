@@ -3,14 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
 
-class CustomButtonIcon extends StatelessWidget {
+class CustomButtonIconText extends StatelessWidget {
   final String text;
   final String imageAsset;
   final Color? bgColor;
   final Color? textColor;
   final VoidCallback? onPrressed;
 
-  const CustomButtonIcon({
+  const CustomButtonIconText({
     required this.text,
     required this.imageAsset,
     this.bgColor,
@@ -25,21 +25,21 @@ class CustomButtonIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 45,
+      height: 50,
       width: double.infinity,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           primary: bgColor ?? defaultTextColor,
           side: BorderSide(
             width: 1.5,
-            color: primaryColorWhite,
+            color: primaryColorBlack,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Image.asset(
               imageAsset,
@@ -51,9 +51,9 @@ class CustomButtonIcon extends StatelessWidget {
             Text(
               text,
               style: primaryTextStyle.copyWith(
-                fontSize: 14,
-                fontWeight: semiBold,
-                color: primaryColorWhite,
+                fontSize: 16,
+                fontWeight: medium,
+                color: primaryColorBlack,
               ),
             ),
           ],

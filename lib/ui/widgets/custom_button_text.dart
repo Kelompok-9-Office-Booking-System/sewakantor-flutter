@@ -34,7 +34,7 @@ class CustomButtonText extends StatelessWidget {
         child: Text(
           text,
           style: primaryTextStyle.copyWith(
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: semiBold,
           ),
         ),

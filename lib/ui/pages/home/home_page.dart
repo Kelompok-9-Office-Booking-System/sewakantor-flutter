@@ -328,9 +328,15 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomTile(),
-            CustomTile(),
-            CustomTile(),
+            for (var i = 0; i < 4; i++)
+              CustomTile(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/detail-room-page',
+                  );
+                },
+              ),
           ],
         ),
       );
@@ -346,9 +352,15 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomTile(),
-            CustomTile(),
-            CustomTile(),
+            for (var i = 0; i < 4; i++)
+              CustomTile(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/detail-room-page',
+                  );
+                },
+              ),
           ],
         ),
       );

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
+import 'package:sewakantor_flutter/ui/pages/home/chat_page.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_card.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_card_reviews.dart';
 
@@ -593,6 +594,65 @@ class DetailRoomPage extends StatelessWidget {
       );
     }
 
+    Widget customBottomNav() {
+      return ClipRRect(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(30),
+        ),
+        child: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          notchMargin: 12,
+          clipBehavior: Clip.antiAlias,
+          child: BottomNavigationBar(
+            // currentIndex: ,
+            onTap: (value) {
+              print(value);
+              if (value == 0) {
+                showAboutDialog(context: context);
+              } else if (value == 1) {
+                Navigator.pushNamed(
+                  context,
+                  '/chat-page',
+                );
+              }
+            },
+            backgroundColor: primaryColorMidnightExpress,
+            type: BottomNavigationBarType.fixed,
+            showSelectedLabels: false, // <-- HERE
+            showUnselectedLabels: false,
+            items: [
+              BottomNavigationBarItem(
+                icon: Container(
+                  margin: EdgeInsets.only(
+                    top: 5,
+                  ),
+                  child: Image.asset(
+                    'assets/icon/schedule_tour_icon.png',
+                    height: 50,
+                    color: primaryColorNobel,
+                  ),
+                ),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Container(
+                  margin: EdgeInsets.only(
+                    top: 5,
+                  ),
+                  child: Image.asset(
+                    'assets/icon/contact_us_icon.png',
+                    height: 50,
+                    color: primaryColorNobel,
+                  ),
+                ),
+                label: '',
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -719,6 +779,7 @@ class DetailRoomPage extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: customBottomNav(),
     );
   }
 }

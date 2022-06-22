@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sewakantor_flutter/providers/page_provider.dart';
 import 'package:sewakantor_flutter/ui/pages/detail_room_page.dart';
+import 'package:sewakantor_flutter/ui/pages/home/chat_page.dart';
 import 'package:sewakantor_flutter/ui/pages/home/home_page.dart';
 import 'package:sewakantor_flutter/ui/pages/home/main_page.dart';
 import 'package:sewakantor_flutter/ui/pages/login_page.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
           '/signup-page': (context) => SignUpPage(),
           '/main-page': (context) => MainPage(),
           '/home-page': (context) => HomePage(),
+          '/chat-page': (context) => ChatPage(),
           '/detail-room-page': (context) => DetailRoomPage(),
           '/personal-information-page': (context) => PersonalInformationPage(),
           '/not-found-page': (context) => NotFoundPage(),

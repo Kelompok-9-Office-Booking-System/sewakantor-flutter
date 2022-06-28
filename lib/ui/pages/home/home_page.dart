@@ -1,16 +1,24 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_button_icon.dart';
+import 'package:sewakantor_flutter/ui/widgets/custom_button_select.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_button_text.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_card.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_text_form_field.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_tile.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Widget header() {
@@ -53,148 +61,285 @@ class HomePage extends StatelessWidget {
     }
 
     Future<void> showFilterSearch() async {
+      // print(dateRange);
+
       return showDialog(
-        context: context,
-        builder: (context) {
-          return Container(
-            // margin: EdgeInsets.all(20),
-            width: double.infinity,
-            child: Dialog(
-              insetPadding: EdgeInsets.all(10),
-              backgroundColor: primaryColorMidnightExpress,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.all(35),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              'Filter',
-                              style: primaryTextStyle.copyWith(
-                                color: primaryColorWhite,
-                                fontWeight: semiBold,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Icon(
-                                Icons.close,
-                                color: primaryColorWhite,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      CustomTextFormField(
-                        title: 'Locations',
-                        colorTitle: primaryColorWhite,
-                        colorBorder: primaryColorWhite,
-                        colorHintText: primaryColorWhite.withOpacity(0.4),
-                        hintText: 'Find location',
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      Text(
-                        'Select Date',
-                        style: primaryTextStyle.copyWith(
-                          color: primaryColorWhite,
-                          fontWeight: semiBold,
-                          fontSize: 14,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      Text(
-                        'Office Type',
-                        style: primaryTextStyle.copyWith(
-                          color: primaryColorWhite,
-                          fontWeight: semiBold,
-                          fontSize: 14,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Capacity',
-                            style: primaryTextStyle.copyWith(
-                              color: primaryColorWhite,
-                              fontWeight: semiBold,
-                              fontSize: 14,
-                            ),
-                          ),
-                          Text(
-                            '100 - 1000',
-                            style: primaryTextStyle.copyWith(
-                              color: primaryColorWhite,
-                              fontWeight: semiBold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Price',
-                            style: primaryTextStyle.copyWith(
-                              color: primaryColorWhite,
-                              fontWeight: semiBold,
-                              fontSize: 14,
-                            ),
-                          ),
-                          Text(
-                            'Rp 100.000 - 10.000.000',
-                            style: primaryTextStyle.copyWith(
-                              color: primaryColorWhite,
-                              fontWeight: semiBold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      CustomButtonText(
-                        text: 'Show result',
-                        bgColor: primaryColorBlackRussian,
-                        onPrressed: () {},
-                      ),
-                    ],
-                  ),
+          context: context,
+          builder: (context) {
+            DateTimeRange dateRange = DateTimeRange(
+              start: DateTime(2022, 11, 5),
+              end: DateTime(2022, 12, 24),
+            );
+
+            // Future pickDateRange() async {
+
+            //       if (newDateRange == null) return;
+
+            //       setStateDialog(() {
+            //         dateRange = newDateRange;
+            //       });
+            //     }
+
+            String tanggal_mulai = 'dd/mm/yyyy';
+            String tanggal_berakhir = 'dd/mm/yyyy';
+
+            RangeValues valuesCapacity = RangeValues(0, 1000);
+            RangeValues valuesPrice = RangeValues(0, 10000000);
+
+            List<String> officeTypeList = [
+              'Office Room',
+              'Coworking',
+              'Virtual Room',
+              'Meeting Room',
+            ];
+
+            return Container(
+              // margin: EdgeInsets.all(20),
+              width: double.infinity,
+              child: Dialog(
+                insetPadding: EdgeInsets.all(10),
+                backgroundColor: primaryColorMidnightExpress,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
                 ),
+                child: StatefulBuilder(builder: (context, setState) {
+                  return SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.all(35),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  'Filter',
+                                  style: primaryTextStyle.copyWith(
+                                    color: primaryColorWhite,
+                                    fontWeight: semiBold,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Icon(
+                                    Icons.close,
+                                    color: primaryColorWhite,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          CustomTextFormField(
+                            title: 'Locations',
+                            colorTitle: primaryColorWhite,
+                            colorBorder: primaryColorWhite,
+                            colorHintText: primaryColorWhite.withOpacity(0.4),
+                            hintText: 'Find location',
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Text(
+                            'Select Date',
+                            style: primaryTextStyle.copyWith(
+                              color: primaryColorWhite,
+                              fontWeight: semiBold,
+                              fontSize: 14,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'From',
+                                    style: primaryTextStyle.copyWith(
+                                      color: primaryColorWhite,
+                                      fontWeight: medium,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  CustomButtonSelect(
+                                    onTap: () async {
+                                      DateTimeRange? newDateRange =
+                                          await showDateRangePicker(
+                                        context: context,
+                                        firstDate: DateTime(1900),
+                                        lastDate: DateTime(2100),
+                                      );
+                                      if (newDateRange != null) {
+                                        setState(() {
+                                          tanggal_mulai =
+                                              '${newDateRange.start.day}/${newDateRange.start.month}/${newDateRange.start.year}';
+                                          tanggal_berakhir =
+                                              '${newDateRange.end.day}/${newDateRange.end.month}/${newDateRange.end.year}';
+                                        });
+                                      }
+                                    },
+                                    date: '${tanggal_mulai}',
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'To',
+                                    style: primaryTextStyle.copyWith(
+                                      color: primaryColorWhite,
+                                      fontWeight: medium,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  CustomButtonSelect(
+                                    onTap: () async {
+                                      DateTimeRange? newDateRange =
+                                          await showDateRangePicker(
+                                        context: context,
+                                        firstDate: DateTime(1900),
+                                        lastDate: DateTime(2100),
+                                      );
+                                      if (newDateRange != null) {
+                                        setState(() {
+                                          tanggal_mulai =
+                                              '${newDateRange.start.day}/${newDateRange.start.month}/${newDateRange.start.year}';
+                                          tanggal_berakhir =
+                                              '${newDateRange.end.day}/${newDateRange.end.month}/${newDateRange.end.year}';
+                                        });
+                                      }
+                                    },
+                                    date: '${tanggal_berakhir}',
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Text(
+                            'Office Type',
+                            style: primaryTextStyle.copyWith(
+                              color: primaryColorWhite,
+                              fontWeight: semiBold,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Wrap(
+                            spacing: 5,
+                            children: [
+                              for (var i in officeTypeList)
+                                ChoiceChip(
+                                  label: Text(i.toString()),
+                                  selected: false,
+                                ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Capacity',
+                                style: primaryTextStyle.copyWith(
+                                  color: primaryColorWhite,
+                                  fontWeight: semiBold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Text(
+                                '${valuesCapacity.start.toInt()} - ${valuesCapacity.end.toInt()}',
+                                style: primaryTextStyle.copyWith(
+                                  color: primaryColorWhite,
+                                  fontWeight: semiBold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                          RangeSlider(
+                            min: 0,
+                            max: 1000,
+                            values: valuesCapacity,
+                            divisions: 10,
+                            activeColor: primaryColorBlackRussian,
+                            inactiveColor: primaryColorWhite,
+                            onChanged: (value) {
+                              print('START: ${value.start}, END: ${value.end}');
+                              setState(() {
+                                valuesCapacity = value;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Price',
+                                style: primaryTextStyle.copyWith(
+                                  color: primaryColorWhite,
+                                  fontWeight: semiBold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Text(
+                                'Rp ${valuesPrice.start.toInt()} - ${valuesPrice.end.toInt()}',
+                                style: primaryTextStyle.copyWith(
+                                  color: primaryColorWhite,
+                                  fontWeight: semiBold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                          RangeSlider(
+                            min: 0,
+                            max: 10000000,
+                            values: valuesPrice,
+                            divisions: 10,
+                            activeColor: primaryColorBlackRussian,
+                            inactiveColor: primaryColorWhite,
+                            onChanged: (value) {
+                              print('START: ${value.start}, END: ${value.end}');
+                              setState(() {
+                                valuesPrice = value;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          CustomButtonText(
+                            text: 'Show result',
+                            bgColor: primaryColorBlackRussian,
+                            onPrressed: () {},
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               ),
-            ),
-          );
-        },
-      );
+            );
+          });
     }
 
     Widget searchBar() {

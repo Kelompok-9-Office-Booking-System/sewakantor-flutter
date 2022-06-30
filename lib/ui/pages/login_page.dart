@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sewakantor_flutter/providers/auth_provider.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
 import 'package:sewakantor_flutter/ui/pages/signup_page.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_button_icon.dart';
@@ -22,23 +25,49 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
     handleSignIn() async {
       try {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: Duration(seconds: 2),
-            backgroundColor: Colors.greenAccent,
-            content: Text(
-              'Berhasil Login',
-              textAlign: TextAlign.center,
+        if (await authProvider.signIn(
+          email: emailController.text,
+          password: passwordController.text,
+        )) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.greenAccent,
+              content: Text(
+                'Berhasil Login',
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-        );
+          );
+        }
+
         Future.delayed(Duration(seconds: 3), () async {
           await Navigator.pushNamedAndRemoveUntil(
               context, '/main-page', (route) => false);
         });
-      } catch (e) {}
+      } on DioError catch (e) {
+        // String handlingErrorCode(String errorCode) {
+        //   if (errorCode == 'user-not-found') {
+        //     return 'User Not Found';
+        //   } else if (errorCode == 'wrong-password') {
+        //     return 'Wrong Password';
+        //   }
+        //   return errorCode;
+        // }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.redAccent,
+            content: Text(
+              e.response!.data["message"].toString(),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
     }
 
     return Scaffold(

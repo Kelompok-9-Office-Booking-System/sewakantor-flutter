@@ -36,55 +36,50 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<bool> signUp({
-  //   required String email,
-  //   required String password,
-  //   required String passwordConfirmation,
-  //   required String name,
-  //   required String phoneNumber,
-  // }) async {
-  //   changeState(AuthState.loading);
-  //   try {
-  //     UserModel user = await AuthService().signUp(
-  //       email: email,
-  //       password: password,
-  //       passwordConfirmation: passwordConfirmation,
-  //       name: name,
-  //       phoneNumber: phoneNumber,
-  //     );
+  Future<bool> signUp({
+    required String email,
+    required String password,
+    required String firstName,
+    required String lastName,
+  }) async {
+    changeState(AuthState.loading);
+    try {
+      UserModel user = await AuthApi().signUp(
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+      );
 
-  //     _user = user;
+      _user = user;
 
-  //     // note : SharedPref
+      // note : SharedPref
 
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     if (user.token != null) {
-  //       prefs.setString('token', user.token!);
-  //     }
-  //     print(user.fullName);
-  //     if (user.token != null) {
-  //       prefs.setString('nama', user.fullName!);
-  //     }
-  //     // String userSaved = json.encode(_user.toJson());
-  //     // prefs.setString('userSaved', userSaved);
+      final prefs = await SharedPreferences.getInstance();
 
-  //     // _user = UserModel.fromJson(json.decode(userSaved));
+      prefs.setString('token', user.token!);
+      print(prefs.getString('token'));
 
-  //     // note : End
+      String userSaved = json.encode(_user.toJson());
+      prefs.setString('userSaved', userSaved);
 
-  //     changeState(AuthState.none);
+      _user = UserModel.fromJson(json.decode(userSaved));
 
-  //     return true;
-  //   } catch (e) {
-  //     print(e.toString() + " { disini errornya }");
+      // note : End
 
-  //     changeState(AuthState.error);
+      changeState(AuthState.none);
 
-  //     throw e;
+      return true;
+    } catch (e) {
+      print(e.toString() + " { disini errornya }");
 
-  //     return false;
-  //   }
-  // }
+      changeState(AuthState.error);
+
+      throw e;
+
+      return false;
+    }
+  }
 
   // Future<bool> updateProfile({
   //   required String fullName,

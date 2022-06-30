@@ -1,6 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:sewakantor_flutter/providers/auth_provider.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_button_icon.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_button_text.dart';
@@ -26,22 +30,44 @@ class SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     print(MediaQuery.of(context).size);
 
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
     handleSignUp() async {
       try {
+        if (await authProvider.signUp(
+          email: emailController.text,
+          password: passwordController.text,
+          firstName: firstNameController.text,
+          lastName: lastNameController.text,
+        )) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.greenAccent,
+              content: Text(
+                'Berhasil Daftar',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        }
+
+        Future.delayed(Duration(seconds: 3), () async {
+          await Navigator.pushNamedAndRemoveUntil(
+              context, '/main-page', (route) => false);
+        });
+      } on DioError catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            duration: Duration(seconds: 2),
-            backgroundColor: Colors.greenAccent,
+            backgroundColor: Colors.redAccent,
             content: Text(
-              'Berhasil Daftar',
+              toBeginningOfSentenceCase(
+                  e.response!.data["message"].toString())!,
               textAlign: TextAlign.center,
             ),
           ),
         );
-        Future.delayed(Duration(seconds: 3), () async {
-          Navigator.pop(context);
-        });
-      } catch (e) {}
+      }
     }
 
     handleSignIn() async {

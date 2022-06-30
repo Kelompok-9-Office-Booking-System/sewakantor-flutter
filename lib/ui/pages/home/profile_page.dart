@@ -1,15 +1,59 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sewakantor_flutter/models/user_model.dart';
+import 'package:sewakantor_flutter/providers/auth_provider.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_button_icon.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_button_icon_text.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<AuthProvider>(context, listen: false).getUserActive();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    UserModel user = authProvider.user;
+    print(user.email);
+    print(user.role);
+    print(user.roleId);
+
+    handleSignOut() async {
+      if (await authProvider.signOut()) {
+        // Navigator.pushNamed(context, '/sign-in');
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/signup-page', (route) => false);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.redAccent,
+            content: Text(
+              'Gagal Logout',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
+
+      // note : hanya untuk navigasi sementara
+      Navigator.pushNamedAndRemoveUntil(context, '/sign-in', (route) => false);
+    }
+
     return Container(
       // color: Colors.amber,
       width: double.infinity,
@@ -53,7 +97,7 @@ class ProfilePage extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Wade Warren',
+                  'Fisrt Name & Last Name',
                   style: primaryTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: medium,
@@ -69,7 +113,7 @@ class ProfilePage extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'willie.jennings@example.com',
+                  '${user.email}',
                   style: primaryTextStyle.copyWith(
                     color: primaryColorNobel,
                     fontSize: 16,

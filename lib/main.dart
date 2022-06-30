@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sewakantor_flutter/providers/auth_provider.dart';
 import 'package:sewakantor_flutter/providers/page_provider.dart';
 import 'package:sewakantor_flutter/ui/pages/detail_room_page.dart';
 import 'package:sewakantor_flutter/ui/pages/home/chat_page.dart';
@@ -12,8 +13,11 @@ import 'package:sewakantor_flutter/ui/pages/not_found_page.dart';
 import 'package:sewakantor_flutter/ui/pages/personal_information_page.dart';
 import 'package:sewakantor_flutter/ui/pages/signup_page.dart';
 import 'package:sewakantor_flutter/ui/splash/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
   runApp(const MyApp());
 }
 
@@ -26,6 +30,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => PageProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AuthProvider(),
         ),
       ],
       child: MaterialApp(

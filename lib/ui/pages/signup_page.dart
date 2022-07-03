@@ -97,7 +97,7 @@ class SignUpPageState extends State<SignUpPage> {
           children: [
             Container(
               // padding: const EdgeInsets.only(top: 30),
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height + 100,
               constraints: BoxConstraints(
                   // maxHeight: MediaQuery.of(context).size.height,
                   // maxWidth: MediaQuery.of(context).size.width,

@@ -10,14 +10,14 @@ import 'package:sewakantor_flutter/ui/widgets/custom_button_icon.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_button_text.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_text_form_field.dart';
 
-class ResetPasswordPage extends StatefulWidget {
-  const ResetPasswordPage({Key? key}) : super(key: key);
+class CreateNewPasswordPage extends StatefulWidget {
+  const CreateNewPasswordPage({Key? key}) : super(key: key);
 
   @override
-  State<ResetPasswordPage> createState() => ResetPasswordPageState();
+  State<CreateNewPasswordPage> createState() => CreateNewPasswordPageState();
 }
 
-class ResetPasswordPageState extends State<ResetPasswordPage> {
+class CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
   TextEditingController firstNameController = TextEditingController(text: '');
   TextEditingController lastNameController = TextEditingController(text: '');
   TextEditingController emailController = TextEditingController(text: '');
@@ -28,65 +28,36 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size);
-
-    AuthProvider authProvider = Provider.of<AuthProvider>(context);
-
     handleSignUp() async {
-      try {
-        if (await authProvider.signUp(
-          email: emailController.text,
-          password: passwordController.text,
-          firstName: firstNameController.text,
-          lastName: lastNameController.text,
-        )) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              duration: Duration(seconds: 2),
-              backgroundColor: Colors.greenAccent,
-              content: Text(
-                'Berhasil Daftar',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          );
-        }
-
-        Future.delayed(Duration(seconds: 3), () async {
-          await Navigator.pushNamedAndRemoveUntil(
-              context, '/main-page', (route) => false);
-        });
-      } on DioError catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.redAccent,
-            content: Text(
-              toBeginningOfSentenceCase(
-                  e.response!.data["message"].toString())!,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        );
-      }
-    }
-
-    handleSignIn() async {
+      print('WOOYY');
       try {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             duration: Duration(seconds: 2),
             backgroundColor: Colors.greenAccent,
             content: Text(
-              'Berhasil Login',
+              'Berhasil Kirim Email',
               textAlign: TextAlign.center,
             ),
           ),
         );
+
         Future.delayed(Duration(seconds: 3), () async {
           await Navigator.pushNamedAndRemoveUntil(
-              context, '/main-page', (route) => false);
+              context, '/send-email-page', (route) => true);
         });
-      } catch (e) {}
+      } catch (e) {
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     backgroundColor: Colors.redAccent,
+        //     content: Text(
+        //       toBeginningOfSentenceCase(
+        //           e.response!.data["message"].toString())!,
+        //       textAlign: TextAlign.center,
+        //     ),
+        //   ),
+        // );
+      }
     }
 
     return Scaffold(
@@ -131,9 +102,9 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
                           ),
                         ),
                         Text(
-                          'Reset Password',
+                          'Create New Password',
                           style: primaryTextStyle.copyWith(
-                            fontSize: 24,
+                            fontSize: 20,
                             fontWeight: semiBold,
                             color: primaryColorMidnightExpress,
                           ),
@@ -166,7 +137,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
                         child: Column(
                           children: [
                             Text(
-                              'Enter the email associated with your account and we’ll send an email with instructions to reset your password',
+                              'Your new password must be different from previous used password',
                               style: primaryTextStyle.copyWith(
                                 fontSize: 16,
                                 fontWeight: medium,
@@ -177,20 +148,42 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
                               height: 25,
                             ),
                             CustomTextFormField(
-                              title: 'Email',
-                              hintText: 'Enter your email',
+                              title: 'Password',
+                              hintText: 'Enter your password',
                               colorTitle: primaryColorWhite,
                               colorBorder: primaryColorWhite,
                               colorHintText: primaryColorWhite.withOpacity(0.4),
-                              controller: emailController,
+                              controller: passwordController,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Email Required";
-                                } else if (!RegExp(
-                                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                                    .hasMatch(value)) {
-                                  return 'Enter Correct Email';
-                                } else {
+                                  return "Password Required";
+                                } else if (value.length < 8) {
+                                  return "Password must be more than 8 characters";
+                                } else if (value.length > 32) {
+                                  return "Password must be less than 32 characters";
+                                }
+                                {
+                                  return null;
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            CustomTextFormField(
+                              title: 'Confirrm Password',
+                              hintText: 'Enter your confirm password',
+                              colorTitle: primaryColorWhite,
+                              colorBorder: primaryColorWhite,
+                              colorHintText: primaryColorWhite.withOpacity(0.4),
+                              controller: confirmPasswordController,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Verify Password Required";
+                                } else if (value != passwordController.text) {
+                                  return "Password and Verify Password must be match";
+                                }
+                                {
                                   return null;
                                 }
                               },
@@ -199,7 +192,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
                               height: 20,
                             ),
                             CustomButtonText(
-                              text: 'Send',
+                              text: 'Reset Password',
                               onPrressed: () {
                                 if (formKey.currentState!.validate()) {
                                   handleSignUp();

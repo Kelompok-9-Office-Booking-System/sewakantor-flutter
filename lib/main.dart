@@ -11,6 +11,7 @@ import 'package:sewakantor_flutter/ui/pages/home/main_page.dart';
 import 'package:sewakantor_flutter/ui/pages/login_page.dart';
 import 'package:sewakantor_flutter/ui/pages/not_found_page.dart';
 import 'package:sewakantor_flutter/ui/pages/personal_information_page.dart';
+import 'package:sewakantor_flutter/ui/pages/reset_password_page.dart';
 import 'package:sewakantor_flutter/ui/pages/signup_page.dart';
 import 'package:sewakantor_flutter/ui/splash/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => SplashScreen(),
           '/login-page': (context) => LoginPage(),
           '/signup-page': (context) => SignUpPage(),
+          '/reset-password-page': (context) => ResetPasswordPage(),
           '/main-page': (context) => MainPage(),
           '/home-page': (context) => HomePage(),
           '/chat-page': (context) => ChatPage(),

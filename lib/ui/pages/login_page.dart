@@ -173,7 +173,12 @@ class _LoginPageState extends State<LoginPage> {
                               height: 6,
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, '/reset-password-page');
+
+                                print('reset password page');
+                              },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [

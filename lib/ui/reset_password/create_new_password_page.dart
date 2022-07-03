@@ -10,14 +10,14 @@ import 'package:sewakantor_flutter/ui/widgets/custom_button_icon.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_button_text.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_text_form_field.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+class CreateNewPasswordPage extends StatefulWidget {
+  const CreateNewPasswordPage({Key? key}) : super(key: key);
 
   @override
-  State<SignUpPage> createState() => SignUpPageState();
+  State<CreateNewPasswordPage> createState() => CreateNewPasswordPageState();
 }
 
-class SignUpPageState extends State<SignUpPage> {
+class CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
   TextEditingController firstNameController = TextEditingController(text: '');
   TextEditingController lastNameController = TextEditingController(text: '');
   TextEditingController emailController = TextEditingController(text: '');
@@ -28,65 +28,36 @@ class SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size);
-
-    AuthProvider authProvider = Provider.of<AuthProvider>(context);
-
     handleSignUp() async {
-      try {
-        if (await authProvider.signUp(
-          email: emailController.text,
-          password: passwordController.text,
-          firstName: firstNameController.text,
-          lastName: lastNameController.text,
-        )) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              duration: Duration(seconds: 2),
-              backgroundColor: Colors.greenAccent,
-              content: Text(
-                'Berhasil Daftar',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          );
-        }
-
-        Future.delayed(Duration(seconds: 3), () async {
-          await Navigator.pushNamedAndRemoveUntil(
-              context, '/main-page', (route) => false);
-        });
-      } on DioError catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.redAccent,
-            content: Text(
-              toBeginningOfSentenceCase(
-                  e.response!.data["message"].toString())!,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        );
-      }
-    }
-
-    handleSignIn() async {
+      print('WOOYY');
       try {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             duration: Duration(seconds: 2),
             backgroundColor: Colors.greenAccent,
             content: Text(
-              'Berhasil Login',
+              'Berhasil Kirim Email',
               textAlign: TextAlign.center,
             ),
           ),
         );
+
         Future.delayed(Duration(seconds: 3), () async {
           await Navigator.pushNamedAndRemoveUntil(
-              context, '/main-page', (route) => false);
+              context, '/send-email-page', (route) => true);
         });
-      } catch (e) {}
+      } catch (e) {
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     backgroundColor: Colors.redAccent,
+        //     content: Text(
+        //       toBeginningOfSentenceCase(
+        //           e.response!.data["message"].toString())!,
+        //       textAlign: TextAlign.center,
+        //     ),
+        //   ),
+        // );
+      }
     }
 
     return Scaffold(
@@ -97,7 +68,7 @@ class SignUpPageState extends State<SignUpPage> {
           children: [
             Container(
               // padding: const EdgeInsets.only(top: 30),
-              height: MediaQuery.of(context).size.height + 100,
+              height: MediaQuery.of(context).size.height,
               constraints: BoxConstraints(
                   // maxHeight: MediaQuery.of(context).size.height,
                   // maxWidth: MediaQuery.of(context).size.width,
@@ -131,9 +102,9 @@ class SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                         Text(
-                          'Sign Up',
+                          'Create New Password',
                           style: primaryTextStyle.copyWith(
-                            fontSize: 24,
+                            fontSize: 20,
                             fontWeight: semiBold,
                             color: primaryColorMidnightExpress,
                           ),
@@ -165,77 +136,16 @@ class SignUpPageState extends State<SignUpPage> {
                         key: formKey,
                         child: Column(
                           children: [
-                            CustomTextFormField(
-                              title: 'First Name',
-                              hintText: 'Enter your first name',
-                              colorTitle: primaryColorWhite,
-                              colorBorder: primaryColorWhite,
-                              colorHintText: primaryColorWhite.withOpacity(0.4),
-                              controller: firstNameController,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  //allow upper and lower case alphabets, space, and number
-                                  return "First Name Required";
-                                } else if (!RegExp(r'^[a-z A-Z 0-9]+$')
-                                    .hasMatch(value)) {
-                                  return "Enter Correct First Name";
-                                } else if (value.length > 50) {
-                                  return "Full Name too long";
-                                }
-                                {
-                                  return null;
-                                }
-                              },
+                            Text(
+                              'Your new password must be different from previous used password',
+                              style: primaryTextStyle.copyWith(
+                                fontSize: 16,
+                                fontWeight: medium,
+                                color: primaryColorWhite,
+                              ),
                             ),
                             SizedBox(
-                              height: 20,
-                            ),
-                            CustomTextFormField(
-                              title: 'Last Name',
-                              hintText: 'Enter your last name',
-                              colorTitle: primaryColorWhite,
-                              colorBorder: primaryColorWhite,
-                              colorHintText: primaryColorWhite.withOpacity(0.4),
-                              controller: lastNameController,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  //allow upper and lower case alphabets, space, and number
-                                  return "Last Name Required";
-                                } else if (!RegExp(r'^[a-z A-Z 0-9]+$')
-                                    .hasMatch(value)) {
-                                  return "Enter Correct Last Name";
-                                } else if (value.length > 50) {
-                                  return "Last Name too long";
-                                }
-                                {
-                                  return null;
-                                }
-                              },
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            CustomTextFormField(
-                              title: 'Email',
-                              hintText: 'Enter your email',
-                              colorTitle: primaryColorWhite,
-                              colorBorder: primaryColorWhite,
-                              colorHintText: primaryColorWhite.withOpacity(0.4),
-                              controller: emailController,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Email Required";
-                                } else if (!RegExp(
-                                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                                    .hasMatch(value)) {
-                                  return 'Enter Correct Email';
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                            SizedBox(
-                              height: 20,
+                              height: 25,
                             ),
                             CustomTextFormField(
                               title: 'Password',
@@ -282,7 +192,7 @@ class SignUpPageState extends State<SignUpPage> {
                               height: 20,
                             ),
                             CustomButtonText(
-                              text: 'Sign Up',
+                              text: 'Reset Password',
                               onPrressed: () {
                                 if (formKey.currentState!.validate()) {
                                   handleSignUp();
@@ -290,46 +200,6 @@ class SignUpPageState extends State<SignUpPage> {
                                 FocusManager.instance.primaryFocus?.unfocus();
                               },
                               bgColor: primaryColorBlackRussian,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context, '/login-page', (route) => false);
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Already have any account? ',
-                                    style: primaryTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: semiBold,
-                                      color: primaryColorWhite,
-                                    ),
-                                  ),
-                                  Text(
-                                    ' Login',
-                                    style: primaryTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: semiBold,
-                                      color: primaryColorWhite,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            CustomButtonIcon(
-                              text: 'Login with Google',
-                              imageAsset: 'assets/icon/google_icon.png',
-                              onPrressed: () {
-                                handleSignIn();
-                              },
                             ),
                             SizedBox(
                               height: 15,

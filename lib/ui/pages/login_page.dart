@@ -76,8 +76,8 @@ class _LoginPageState extends State<LoginPage> {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: SingleChildScrollView(
           child: ConstrainedBox(
-            constraints:
-                BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height + 100),
             child: Padding(
               padding: const EdgeInsets.only(top: 30),
               child: Column(
@@ -173,7 +173,12 @@ class _LoginPageState extends State<LoginPage> {
                               height: 6,
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, '/reset-password-page');
+
+                                print('reset password page');
+                              },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [

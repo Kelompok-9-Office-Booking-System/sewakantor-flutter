@@ -1,12 +1,16 @@
 // ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:sewakantor_flutter/models/space_model.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
+import 'package:sewakantor_flutter/utils/currency_format.dart';
 
 class CustomCard extends StatelessWidget {
   final VoidCallback? onTap;
+  final SpaceModel? space;
   const CustomCard({
     required this.onTap,
+    required this.space,
     Key? key,
   }) : super(key: key);
 
@@ -26,6 +30,10 @@ class CustomCard extends StatelessWidget {
               height: 95,
               width: 180,
               decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage('${space!.thumbnail}'),
+                  fit: BoxFit.cover,
+                ),
                 color: primaryColorNobel,
                 borderRadius: BorderRadius.circular(5),
               ),
@@ -36,7 +44,7 @@ class CustomCard extends StatelessWidget {
             Container(
               // color: Colors.red,
               child: Text(
-                'BCA Tower',
+                space!.name!,
                 style: primaryTextStyle.copyWith(
                   fontSize: 14,
                   fontWeight: semiBold,
@@ -51,7 +59,7 @@ class CustomCard extends StatelessWidget {
             ),
             Container(
               child: Text(
-                '50/F, Menara BCA Grand Indonesia, Jakarta, 10310 50/F, Menara BCA Grand Indonesia, Jakarta, 10310',
+                '${space!.address}',
                 style: primaryTextStyle.copyWith(
                   fontSize: 14,
                   fontWeight: reguler,
@@ -78,9 +86,12 @@ class CustomCard extends StatelessWidget {
                           Icons.home_work,
                           color: primaryColorBlackRussian,
                         ),
+                        SizedBox(
+                          width: 4,
+                        ),
                         Expanded(
                           child: Text(
-                            '143',
+                            '${space!.unit}',
                             style: primaryTextStyle.copyWith(
                               fontSize: 14,
                               fontWeight: reguler,
@@ -99,7 +110,7 @@ class CustomCard extends StatelessWidget {
                         color: secondaryColorTengerineYellow,
                       ),
                       Text(
-                        '4.7',
+                        '${space!.rating}',
                         style: primaryTextStyle.copyWith(
                           fontSize: 14,
                           fontWeight: medium,
@@ -116,7 +127,7 @@ class CustomCard extends StatelessWidget {
             ),
             Container(
               child: Text(
-                'Start from Rp. 2.600.000',
+                'Start from ${CurrencyFormat.convertToIdr(space!.price!, 0)}',
                 style: primaryTextStyle.copyWith(
                   fontSize: 14,
                   fontWeight: semiBold,

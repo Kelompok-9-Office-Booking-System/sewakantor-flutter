@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sewakantor_flutter/models/space_model.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
 import 'package:sewakantor_flutter/ui/pages/home/chat_page.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_card.dart';
@@ -11,12 +13,25 @@ class DetailRoomPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var arg = ModalRoute.of(context)!.settings.arguments as SpaceModel;
+
+    print(arg);
+
+    var id = arg.id;
+    var name = arg.name;
+    var thumbnail = arg.thumbnail;
+    var description = arg.description;
+    var address = arg.address;
+    var unit = arg.unit;
+    var rating = arg.rating;
+    var price = arg.price;
+
     Widget titleAndRating() {
       return Row(
         children: [
           Expanded(
             child: Text(
-              'BCA Tower',
+              name!,
               style: primaryTextStyle.copyWith(
                 fontSize: 18,
                 fontWeight: semiBold,
@@ -31,7 +46,7 @@ class DetailRoomPage extends StatelessWidget {
             color: secondaryColorTengerineYellow,
           ),
           Text(
-            '4.7',
+            '${rating}',
             style: primaryTextStyle.copyWith(
               fontSize: 16,
               fontWeight: medium,
@@ -53,7 +68,7 @@ class DetailRoomPage extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              '50/F, Menara BCA Grand Indonesia, Jakarta, 10310 50/F, Menara BCA Grand Indonesia, Jakarta, 10310',
+              '${address}',
               style: primaryTextStyle.copyWith(
                 fontSize: 14,
                 fontWeight: semiBold,
@@ -193,7 +208,7 @@ class DetailRoomPage extends StatelessWidget {
       );
     }
 
-    Widget description() {
+    Widget descriptionSection() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -209,7 +224,7 @@ class DetailRoomPage extends StatelessWidget {
             height: 5,
           ),
           Text(
-            'Enjoy stunning views from the 50th floor of BCA Tower, located across the street from the famous Bundaran Hotel Indonesia (Bundaran HI). Widely regarded as the centre of Jakarta, the area offers excellent public transport and a supportive business environment.',
+            '${description}',
             style: primaryTextStyle.copyWith(
               fontSize: 14,
               fontWeight: semiBold,
@@ -660,7 +675,13 @@ class DetailRoomPage extends StatelessWidget {
             Container(
               height: 400,
               width: double.infinity,
-              color: Colors.amber,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage('${thumbnail}'),
+                  fit: BoxFit.cover,
+                ),
+                // color: Colors.amber,
+              ),
               padding: EdgeInsets.only(
                 left: 30,
                 top: 45,
@@ -749,7 +770,7 @@ class DetailRoomPage extends StatelessWidget {
                   SizedBox(
                     height: 30,
                   ),
-                  description(),
+                  descriptionSection(),
                   SizedBox(
                     height: 30,
                   ),

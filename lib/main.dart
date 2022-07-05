@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sewakantor_flutter/providers/auth_provider.dart';
 import 'package:sewakantor_flutter/providers/page_provider.dart';
+import 'package:sewakantor_flutter/providers/space_provider.dart';
 import 'package:sewakantor_flutter/ui/pages/detail_room_page.dart';
 import 'package:sewakantor_flutter/ui/pages/home/chat_page.dart';
 import 'package:sewakantor_flutter/ui/pages/home/home_page.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SpaceProvider(),
         ),
       ],
       child: MaterialApp(

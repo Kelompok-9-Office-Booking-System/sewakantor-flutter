@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sewakantor_flutter/models/space_model.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
-import 'package:sewakantor_flutter/utils/idr_format.dart';
+import 'package:sewakantor_flutter/utils/currency_format.dart';
 
 class CustomCard extends StatelessWidget {
   final VoidCallback? onTap;

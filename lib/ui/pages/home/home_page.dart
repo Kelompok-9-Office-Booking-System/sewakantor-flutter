@@ -3,6 +3,11 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sewakantor_flutter/models/space_model.dart';
+import 'package:sewakantor_flutter/models/user_model.dart';
+import 'package:sewakantor_flutter/providers/auth_provider.dart';
+import 'package:sewakantor_flutter/providers/space_provider.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_button_icon.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_button_select.dart';
@@ -19,6 +24,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      AuthProvider authProvider =
+          Provider.of<AuthProvider>(context, listen: false);
+
+      UserModel user = authProvider.user;
+      print(user.email);
+      print(user.token);
+
+      await Provider.of<SpaceProvider>(context, listen: false).getSpacesFromAPI(
+        name: "",
+        token: user.token!,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget header() {
@@ -439,6 +463,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     Widget popularProducts() {
+      SpaceProvider spaceProvider = Provider.of<SpaceProvider>(context);
       return Container(
         // color: Colors.red,
         margin: EdgeInsets.only(
@@ -448,13 +473,25 @@ class _HomePageState extends State<HomePage> {
         height: 270,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: 5,
+          itemCount: spaceProvider.spaces.length,
           itemBuilder: (context, index) {
             return CustomCard(
+              space: spaceProvider.spaces[index],
               onTap: () {
+                print(spaceProvider.spaces[index].name);
                 Navigator.pushNamed(
                   context,
                   '/detail-room-page',
+                  arguments: SpaceModel(
+                    id: spaceProvider.spaces[index].id,
+                    name: spaceProvider.spaces[index].name,
+                    thumbnail: spaceProvider.spaces[index].thumbnail,
+                    description: spaceProvider.spaces[index].description,
+                    address: spaceProvider.spaces[index].address,
+                    unit: spaceProvider.spaces[index].unit,
+                    rating: spaceProvider.spaces[index].rating,
+                    price: spaceProvider.spaces[index].price,
+                  ),
                 );
               },
             );

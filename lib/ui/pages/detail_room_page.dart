@@ -7,6 +7,9 @@ import 'package:sewakantor_flutter/shared/theme.dart';
 import 'package:sewakantor_flutter/ui/pages/home/chat_page.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_card.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_card_reviews.dart';
+import 'package:sewakantor_flutter/ui/widgets/custom_widget_facilities.dart';
+import 'package:sewakantor_flutter/ui/widgets/custom_widget_nearby_places.dart';
+import 'package:sewakantor_flutter/ui/widgets/custom_widget_office_type.dart';
 
 class DetailRoomPage extends StatelessWidget {
   const DetailRoomPage({Key? key}) : super(key: key);
@@ -25,6 +28,9 @@ class DetailRoomPage extends StatelessWidget {
     var unit = arg.unit;
     var rating = arg.rating;
     var price = arg.price;
+    var types = arg.types;
+    var facilities = arg.facilities;
+    var nearbyPlaces = arg.nearbyPlaces;
 
     Widget titleAndRating() {
       return Row(
@@ -85,6 +91,7 @@ class DetailRoomPage extends StatelessWidget {
 
     Widget officeTypeAndDetail() {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -112,97 +119,20 @@ class DetailRoomPage extends StatelessWidget {
           SizedBox(
             height: 7,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            alignment: WrapAlignment.start,
+            runAlignment: WrapAlignment.start,
+            spacing: 5,
             children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    Icons.bookmark,
-                    color: primaryColorBlack,
-                    size: 20,
-                  ),
-                  Text(
-                    'Private Office ',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
-                      color: secondaryColorMischka,
-                    ),
-                  ),
-                  Text(
-                    '143',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.bookmark,
-                    color: primaryColorBlack,
-                    size: 20,
-                  ),
-                  Text(
-                    'Coworking ',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
-                      color: secondaryColorMischka,
-                    ),
-                  ),
-                  Text(
-                    '34',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                ],
-              ),
+              for (var i in types!)
+                CustomWidgetOfficeType(
+                  nameType: i.name.toString(),
+                  countType: i.count.toString(),
+                ),
             ],
           ),
           SizedBox(
             height: 7,
-          ),
-          Row(
-            children: [
-              SizedBox(
-                width: 20,
-              ),
-              Icon(
-                Icons.bookmark,
-                color: primaryColorBlack,
-                size: 20,
-              ),
-              Text(
-                'Meeting Room ',
-                style: primaryTextStyle.copyWith(
-                  fontSize: 13,
-                  fontWeight: medium,
-                  color: secondaryColorMischka,
-                ),
-              ),
-              Text(
-                '5',
-                style: primaryTextStyle.copyWith(
-                  fontSize: 13,
-                  fontWeight: medium,
-                  color: primaryColorBlack,
-                ),
-              ),
-            ],
           ),
         ],
       );
@@ -237,6 +167,14 @@ class DetailRoomPage extends StatelessWidget {
     }
 
     Widget facilitiesSection() {
+      List<String> officeTypeList = [
+        'Office Room',
+        'Coworking',
+        'Virtual Room',
+        'Meeting Room',
+        'Meeting Room2',
+        'Meeting Room3',
+      ];
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -251,132 +189,14 @@ class DetailRoomPage extends StatelessWidget {
           SizedBox(
             height: 7,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.meeting_room_outlined,
-                    color: primaryColorBlack,
-                    size: 24,
-                  ),
-                  Text(
-                    'Meeting Room',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: semiBold,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.car_rental_outlined,
-                    color: primaryColorBlack,
-                    size: 24,
-                  ),
-                  Text(
-                    'Meeting Room',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: semiBold,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 7,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.bookmark,
-                    color: primaryColorBlack,
-                    size: 24,
-                  ),
-                  Text(
-                    'Meeting Room',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: semiBold,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.bookmark,
-                    color: primaryColorBlack,
-                    size: 24,
-                  ),
-                  Text(
-                    'Meeting Room',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: semiBold,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 7,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.bookmark,
-                    color: primaryColorBlack,
-                    size: 24,
-                  ),
-                  Text(
-                    'Meeting Room',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: semiBold,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.bookmark,
-                    color: primaryColorBlack,
-                    size: 24,
-                  ),
-                  Text(
-                    'Meeting Room',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: semiBold,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 7,
-          ),
+          for (var i = 0; i < facilities!.length + 1; i += 2)
+            CustomWidgetFacilities(
+                nameLeft: i + 1 > facilities.length ? null : facilities[i].name,
+                iconLeft: i + 1 > facilities.length ? null : facilities[i].icon,
+                nameRight:
+                    i + 2 > facilities.length ? null : facilities[i + 1].name,
+                iconRight:
+                    i + 2 > facilities.length ? null : facilities[i + 1].icon)
         ],
       );
     }
@@ -429,7 +249,7 @@ class DetailRoomPage extends StatelessWidget {
       );
     }
 
-    Widget nearbyPlaces() {
+    Widget nearbyPlacesSection() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -458,120 +278,11 @@ class DetailRoomPage extends StatelessWidget {
           ),
           Column(
             children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.stadium,
-                    color: primaryColorBlack,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Gelora Bung Karno Stadium',
-                      style: primaryTextStyle.copyWith(
-                        fontSize: 12,
-                        fontWeight: reguler,
-                        color: primaryColorBlack,
-                      ),
-                      maxLines: 1,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    '0.1 km',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 12,
-                      fontWeight: reguler,
-                      color: primaryColorBlack,
-                    ),
-                    maxLines: 1,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.stadium,
-                    color: primaryColorBlack,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Gelora Bung Karno Stadium',
-                      style: primaryTextStyle.copyWith(
-                        fontSize: 12,
-                        fontWeight: reguler,
-                        color: primaryColorBlack,
-                      ),
-                      maxLines: 1,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    '0.1 km',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 12,
-                      fontWeight: reguler,
-                      color: primaryColorBlack,
-                    ),
-                    maxLines: 1,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.stadium,
-                    color: primaryColorBlack,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Gelora Bung Karno Stadium',
-                      style: primaryTextStyle.copyWith(
-                        fontSize: 12,
-                        fontWeight: reguler,
-                        color: primaryColorBlack,
-                      ),
-                      maxLines: 1,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    '0.1 km',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 12,
-                      fontWeight: reguler,
-                      color: primaryColorBlack,
-                    ),
-                    maxLines: 1,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
+              for (var i in nearbyPlaces!)
+                CustomWidgetNearbyPlaces(
+                  name: i.name,
+                  distance: i.distance,
+                ),
             ],
           ),
         ],
@@ -786,7 +497,7 @@ class DetailRoomPage extends StatelessWidget {
                   SizedBox(
                     height: 8,
                   ),
-                  nearbyPlaces(),
+                  nearbyPlacesSection(),
                   SizedBox(
                     height: 30,
                   ),

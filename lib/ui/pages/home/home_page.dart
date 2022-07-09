@@ -491,6 +491,9 @@ class _HomePageState extends State<HomePage> {
                     unit: spaceProvider.spaces[index].unit,
                     rating: spaceProvider.spaces[index].rating,
                     price: spaceProvider.spaces[index].price,
+                    types: spaceProvider.spaces[index].types,
+                    facilities: spaceProvider.spaces[index].facilities,
+                    nearbyPlaces: spaceProvider.spaces[index].nearbyPlaces,
                   ),
                 );
               },

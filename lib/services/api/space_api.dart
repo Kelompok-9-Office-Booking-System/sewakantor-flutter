@@ -19,18 +19,20 @@ class SpaceAPI {
       ),
     );
 
-    print(responseCoba.data);
+    // print(responseCoba.data);
     if (responseCoba.statusCode == 200) {
       List<dynamic> events = responseCoba.data!["data"].map((e) {
         return SpaceModel.fromJson(e) as SpaceModel;
       }).toList();
+
+      print('zzzzzzzzzzz');
 
       List<SpaceModel> realakun = [];
       for (var element in events) {
         realakun.add(SpaceModel.fromDynamic(element));
       }
 
-      print(realakun[1].name);
+      print(realakun[0].types!.length);
 
       return realakun;
     }

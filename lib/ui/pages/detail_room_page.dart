@@ -1,22 +1,43 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sewakantor_flutter/models/space_model.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
 import 'package:sewakantor_flutter/ui/pages/home/chat_page.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_card.dart';
 import 'package:sewakantor_flutter/ui/widgets/custom_card_reviews.dart';
+import 'package:sewakantor_flutter/ui/widgets/custom_widget_facilities.dart';
+import 'package:sewakantor_flutter/ui/widgets/custom_widget_nearby_places.dart';
+import 'package:sewakantor_flutter/ui/widgets/custom_widget_office_type.dart';
 
 class DetailRoomPage extends StatelessWidget {
   const DetailRoomPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var arg = ModalRoute.of(context)!.settings.arguments as SpaceModel;
+
+    print(arg);
+
+    var id = arg.id;
+    var name = arg.name;
+    var thumbnail = arg.thumbnail;
+    var description = arg.description;
+    var address = arg.address;
+    var unit = arg.unit;
+    var rating = arg.rating;
+    var price = arg.price;
+    var types = arg.types;
+    var facilities = arg.facilities;
+    var nearbyPlaces = arg.nearbyPlaces;
+
     Widget titleAndRating() {
       return Row(
         children: [
           Expanded(
             child: Text(
-              'BCA Tower',
+              name!,
               style: primaryTextStyle.copyWith(
                 fontSize: 18,
                 fontWeight: semiBold,
@@ -31,7 +52,7 @@ class DetailRoomPage extends StatelessWidget {
             color: secondaryColorTengerineYellow,
           ),
           Text(
-            '4.7',
+            '${rating}',
             style: primaryTextStyle.copyWith(
               fontSize: 16,
               fontWeight: medium,
@@ -53,7 +74,7 @@ class DetailRoomPage extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              '50/F, Menara BCA Grand Indonesia, Jakarta, 10310 50/F, Menara BCA Grand Indonesia, Jakarta, 10310',
+              '${address}',
               style: primaryTextStyle.copyWith(
                 fontSize: 14,
                 fontWeight: semiBold,
@@ -70,6 +91,7 @@ class DetailRoomPage extends StatelessWidget {
 
     Widget officeTypeAndDetail() {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -97,103 +119,26 @@ class DetailRoomPage extends StatelessWidget {
           SizedBox(
             height: 7,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            alignment: WrapAlignment.start,
+            runAlignment: WrapAlignment.start,
+            spacing: 5,
             children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    Icons.bookmark,
-                    color: primaryColorBlack,
-                    size: 20,
-                  ),
-                  Text(
-                    'Private Office ',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
-                      color: secondaryColorMischka,
-                    ),
-                  ),
-                  Text(
-                    '143',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.bookmark,
-                    color: primaryColorBlack,
-                    size: 20,
-                  ),
-                  Text(
-                    'Coworking ',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
-                      color: secondaryColorMischka,
-                    ),
-                  ),
-                  Text(
-                    '34',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                ],
-              ),
+              for (var i in types!)
+                CustomWidgetOfficeType(
+                  nameType: i.name.toString(),
+                  countType: i.count.toString(),
+                ),
             ],
           ),
           SizedBox(
             height: 7,
           ),
-          Row(
-            children: [
-              SizedBox(
-                width: 20,
-              ),
-              Icon(
-                Icons.bookmark,
-                color: primaryColorBlack,
-                size: 20,
-              ),
-              Text(
-                'Meeting Room ',
-                style: primaryTextStyle.copyWith(
-                  fontSize: 13,
-                  fontWeight: medium,
-                  color: secondaryColorMischka,
-                ),
-              ),
-              Text(
-                '5',
-                style: primaryTextStyle.copyWith(
-                  fontSize: 13,
-                  fontWeight: medium,
-                  color: primaryColorBlack,
-                ),
-              ),
-            ],
-          ),
         ],
       );
     }
 
-    Widget description() {
+    Widget descriptionSection() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -209,7 +154,7 @@ class DetailRoomPage extends StatelessWidget {
             height: 5,
           ),
           Text(
-            'Enjoy stunning views from the 50th floor of BCA Tower, located across the street from the famous Bundaran Hotel Indonesia (Bundaran HI). Widely regarded as the centre of Jakarta, the area offers excellent public transport and a supportive business environment.',
+            '${description}',
             style: primaryTextStyle.copyWith(
               fontSize: 14,
               fontWeight: semiBold,
@@ -222,6 +167,14 @@ class DetailRoomPage extends StatelessWidget {
     }
 
     Widget facilitiesSection() {
+      List<String> officeTypeList = [
+        'Office Room',
+        'Coworking',
+        'Virtual Room',
+        'Meeting Room',
+        'Meeting Room2',
+        'Meeting Room3',
+      ];
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -236,132 +189,14 @@ class DetailRoomPage extends StatelessWidget {
           SizedBox(
             height: 7,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.meeting_room_outlined,
-                    color: primaryColorBlack,
-                    size: 24,
-                  ),
-                  Text(
-                    'Meeting Room',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: semiBold,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.car_rental_outlined,
-                    color: primaryColorBlack,
-                    size: 24,
-                  ),
-                  Text(
-                    'Meeting Room',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: semiBold,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 7,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.bookmark,
-                    color: primaryColorBlack,
-                    size: 24,
-                  ),
-                  Text(
-                    'Meeting Room',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: semiBold,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.bookmark,
-                    color: primaryColorBlack,
-                    size: 24,
-                  ),
-                  Text(
-                    'Meeting Room',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: semiBold,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 7,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.bookmark,
-                    color: primaryColorBlack,
-                    size: 24,
-                  ),
-                  Text(
-                    'Meeting Room',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: semiBold,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.bookmark,
-                    color: primaryColorBlack,
-                    size: 24,
-                  ),
-                  Text(
-                    'Meeting Room',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: semiBold,
-                      color: primaryColorBlack,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 7,
-          ),
+          for (var i = 0; i < facilities!.length + 1; i += 2)
+            CustomWidgetFacilities(
+                nameLeft: i + 1 > facilities.length ? null : facilities[i].name,
+                iconLeft: i + 1 > facilities.length ? null : facilities[i].icon,
+                nameRight:
+                    i + 2 > facilities.length ? null : facilities[i + 1].name,
+                iconRight:
+                    i + 2 > facilities.length ? null : facilities[i + 1].icon)
         ],
       );
     }
@@ -414,7 +249,7 @@ class DetailRoomPage extends StatelessWidget {
       );
     }
 
-    Widget nearbyPlaces() {
+    Widget nearbyPlacesSection() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -443,120 +278,11 @@ class DetailRoomPage extends StatelessWidget {
           ),
           Column(
             children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.stadium,
-                    color: primaryColorBlack,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Gelora Bung Karno Stadium',
-                      style: primaryTextStyle.copyWith(
-                        fontSize: 12,
-                        fontWeight: reguler,
-                        color: primaryColorBlack,
-                      ),
-                      maxLines: 1,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    '0.1 km',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 12,
-                      fontWeight: reguler,
-                      color: primaryColorBlack,
-                    ),
-                    maxLines: 1,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.stadium,
-                    color: primaryColorBlack,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Gelora Bung Karno Stadium',
-                      style: primaryTextStyle.copyWith(
-                        fontSize: 12,
-                        fontWeight: reguler,
-                        color: primaryColorBlack,
-                      ),
-                      maxLines: 1,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    '0.1 km',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 12,
-                      fontWeight: reguler,
-                      color: primaryColorBlack,
-                    ),
-                    maxLines: 1,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.stadium,
-                    color: primaryColorBlack,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Gelora Bung Karno Stadium',
-                      style: primaryTextStyle.copyWith(
-                        fontSize: 12,
-                        fontWeight: reguler,
-                        color: primaryColorBlack,
-                      ),
-                      maxLines: 1,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    '0.1 km',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 12,
-                      fontWeight: reguler,
-                      color: primaryColorBlack,
-                    ),
-                    maxLines: 1,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
+              for (var i in nearbyPlaces!)
+                CustomWidgetNearbyPlaces(
+                  name: i.name,
+                  distance: i.distance,
+                ),
             ],
           ),
         ],
@@ -660,7 +386,13 @@ class DetailRoomPage extends StatelessWidget {
             Container(
               height: 400,
               width: double.infinity,
-              color: Colors.amber,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage('${thumbnail}'),
+                  fit: BoxFit.cover,
+                ),
+                // color: Colors.amber,
+              ),
               padding: EdgeInsets.only(
                 left: 30,
                 top: 45,
@@ -749,7 +481,7 @@ class DetailRoomPage extends StatelessWidget {
                   SizedBox(
                     height: 30,
                   ),
-                  description(),
+                  descriptionSection(),
                   SizedBox(
                     height: 30,
                   ),
@@ -765,7 +497,7 @@ class DetailRoomPage extends StatelessWidget {
                   SizedBox(
                     height: 8,
                   ),
-                  nearbyPlaces(),
+                  nearbyPlacesSection(),
                   SizedBox(
                     height: 30,
                   ),

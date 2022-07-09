@@ -1,3 +1,7 @@
+import 'package:sewakantor_flutter/models/facility_model.dart';
+import 'package:sewakantor_flutter/models/nearby_place_model.dart';
+import 'package:sewakantor_flutter/models/type_model.dart';
+
 class SpaceModel {
   late final int? id;
   late final String? name;
@@ -7,6 +11,9 @@ class SpaceModel {
   late final int? unit;
   late final double? rating;
   late final int? price;
+  late final List<TypeModel>? types;
+  late final List<FacilityModel>? facilities;
+  late final List<NearbyPlaceModel>? nearbyPlaces;
 
   SpaceModel({
     required this.id,
@@ -17,6 +24,9 @@ class SpaceModel {
     required this.unit,
     required this.rating,
     required this.price,
+    required this.types,
+    required this.facilities,
+    required this.nearbyPlaces,
   });
 
   Map<String, dynamic> toJson() {
@@ -29,6 +39,9 @@ class SpaceModel {
       'unit': unit,
       'rating': rating,
       'price': price,
+      'types': types?.map((type) => type.toJson()).toList(),
+      'facilities': facilities?.map((facility) => facility.toJson()).toList(),
+      'nearbyPlaces': nearbyPlaces?.map((place) => place.toJson()).toList(),
     };
   }
 
@@ -41,6 +54,15 @@ class SpaceModel {
     unit = json['unit'];
     rating = json['rating'];
     price = json['price'];
+    types = json['types']
+        .map<TypeModel>((type) => TypeModel.fromJson(type))
+        .toList();
+    facilities = json['facilities']
+        .map<FacilityModel>((facility) => FacilityModel.fromJson(facility))
+        .toList();
+    nearbyPlaces = json['nearbyPlaces']
+        .map<NearbyPlaceModel>((place) => NearbyPlaceModel.fromJson(place))
+        .toList();
   }
 
   SpaceModel.fromDynamic(dynamic json) {
@@ -52,5 +74,8 @@ class SpaceModel {
     unit = json.unit;
     rating = json.rating;
     price = json.price;
+    types = json.types;
+    facilities = json.facilities;
+    nearbyPlaces = json.nearbyPlaces;
   }
 }

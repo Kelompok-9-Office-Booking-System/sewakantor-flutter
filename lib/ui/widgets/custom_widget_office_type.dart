@@ -13,7 +13,6 @@ class CustomWidgetOfficeType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.amber,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

@@ -24,7 +24,6 @@ class CustomWidgetFacilities extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    color: Colors.amber,
                     width: (MediaQuery.of(context).size.width / 2) - 30,
                     child: Row(
                       children: [
@@ -53,7 +52,6 @@ class CustomWidgetFacilities extends StatelessWidget {
                   ),
                   nameRight != null
                       ? Container(
-                          color: Colors.redAccent,
                           width: (MediaQuery.of(context).size.width / 2) - 30,
                           child: Row(
                             children: [

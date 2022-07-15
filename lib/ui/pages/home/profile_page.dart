@@ -32,6 +32,8 @@ class _ProfilePageState extends State<ProfilePage> {
     print(user.email);
     print(user.role);
     print(user.roleId);
+    print(user.firstName);
+    print(user.lastName);
 
     handleSignOut() async {
       if (await authProvider.signOut()) {
@@ -97,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Expanded(
                 child: Text(
-                  'Fisrt Name & Last Name',
+                  '${user.firstName} ${user.lastName}',
                   style: primaryTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: medium,

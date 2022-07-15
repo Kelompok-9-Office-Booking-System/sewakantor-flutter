@@ -13,10 +13,10 @@ class AuthApi {
     required String password,
   }) async {
     try {
-      String base_url = 'http://54.211.120.43/api/v1/customer/auth/login';
+      String base_url = 'https://sk-api.mbaharip.me/api/v1/customer/auth/login';
       print(base_url);
       var response = await Dio().post(
-        'http://54.211.120.43/api/v1/customer/auth/login',
+        'https://sk-api.mbaharip.me/api/v1/customer/auth/login',
         data: {
           "email": email,
           "password": password,
@@ -45,11 +45,12 @@ class AuthApi {
     required String lastName,
   }) async {
     try {
-      String base_url = 'http://54.211.120.43/api/v1/customer/auth/register';
+      String base_url =
+          'https://sk-api.mbaharip.me/api/v1/customer/auth/register';
       print(base_url);
 
-      var response =
-          await Dio().post('http://54.211.120.43/api/v1/customer/auth/register',
+      var response = await Dio()
+          .post('https://sk-api.mbaharip.me/api/v1/customer/auth/register',
               data: {
                 "email": email,
                 "password": password,

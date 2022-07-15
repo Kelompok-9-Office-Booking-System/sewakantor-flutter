@@ -148,6 +148,10 @@ class AuthProvider with ChangeNotifier {
 
       _user = UserModel.fromJson(json.decode(userSaved));
 
+      print('hahahhdhsjahdjhada');
+      print(_user.email);
+      print(_user.firstName);
+
       // note : End
 
       changeState(AuthState.none);

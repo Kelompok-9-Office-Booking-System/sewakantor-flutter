@@ -20,7 +20,9 @@ class UserModel {
   Map<String, dynamic> toJson() {
     return {
       'data': {
-        'username': email,
+        'email': email,
+        'firstName': firstName,
+        'lastName': lastName,
         'roleId': roleId,
         'role': role,
         'tokenType': 'Bearer',
@@ -30,7 +32,9 @@ class UserModel {
   }
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    email = json['data']['username'];
+    email = json['data']['email'];
+    firstName = json['data']['firstName'];
+    lastName = json['data']['lastName'];
     roleId = json['data']['roleId'];
     role = json['data']['role'];
     token = json['data']['token'];

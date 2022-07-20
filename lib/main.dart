@@ -12,6 +12,7 @@ import 'package:sewakantor_flutter/ui/pages/home/main_page.dart';
 import 'package:sewakantor_flutter/ui/pages/login_page.dart';
 import 'package:sewakantor_flutter/ui/pages/not_found_page.dart';
 import 'package:sewakantor_flutter/ui/pages/personal_information_page.dart';
+import 'package:sewakantor_flutter/ui/pages/privacy_policy_page.dart';
 import 'package:sewakantor_flutter/ui/reset_password/create_new_password_page.dart';
 import 'package:sewakantor_flutter/ui/reset_password/reset_password_page.dart';
 import 'package:sewakantor_flutter/ui/pages/signup_page.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
           '/detail-room-page': (context) => DetailRoomPage(),
           '/personal-information-page': (context) => PersonalInformationPage(),
           '/not-found-page': (context) => NotFoundPage(),
+          '/privacy-policy-page': (context) => PrivacyPolicyPage(),
         },
       ),
     );

@@ -411,6 +411,7 @@ class DetailRoomPage extends StatelessWidget {
                             colorTitle: primaryColorWhite,
                             colorBorder: primaryColorWhite,
                             colorHintText: primaryColorWhite.withOpacity(0.4),
+                            colorText: primaryColorWhite,
                             hintText: 'Enter your name',
                           ),
                           SizedBox(
@@ -421,6 +422,7 @@ class DetailRoomPage extends StatelessWidget {
                             colorTitle: primaryColorWhite,
                             colorBorder: primaryColorWhite,
                             colorHintText: primaryColorWhite.withOpacity(0.4),
+                            colorText: primaryColorWhite,
                             hintText: 'Enter your name company',
                           ),
                           SizedBox(
@@ -431,6 +433,7 @@ class DetailRoomPage extends StatelessWidget {
                             colorTitle: primaryColorWhite,
                             colorBorder: primaryColorWhite,
                             colorHintText: primaryColorWhite.withOpacity(0.4),
+                            colorText: primaryColorWhite,
                             hintText: 'Enter your email company',
                           ),
                           SizedBox(
@@ -441,6 +444,7 @@ class DetailRoomPage extends StatelessWidget {
                             colorTitle: primaryColorWhite,
                             colorBorder: primaryColorWhite,
                             colorHintText: primaryColorWhite.withOpacity(0.4),
+                            colorText: primaryColorWhite,
                             hintText: 'Enter your phone number',
                           ),
                           SizedBox(

@@ -18,6 +18,9 @@ Color secondaryColorTengerineYellow = const Color(0xffFEC901); // color4
 Color secondaryColorWhite = const Color(0xffFFFFFF); // color5
 Color secondaryColorMischka = const Color(0xff9EA1AC); // color6
 
+Color alertColor = const Color(0xffED6363);
+Color successColor = const Color(0xff66A76F);
+
 // FONTS
 
 TextStyle primaryTextStyle = GoogleFonts.poppins();

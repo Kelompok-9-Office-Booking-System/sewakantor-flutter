@@ -34,7 +34,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             duration: Duration(seconds: 2),
-            backgroundColor: Colors.greenAccent,
+            backgroundColor: successColor,
             content: Text(
               'Berhasil Kirim Email',
               textAlign: TextAlign.center,
@@ -49,7 +49,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
       } catch (e) {
         // ScaffoldMessenger.of(context).showSnackBar(
         //   SnackBar(
-        //     backgroundColor: Colors.redAccent,
+        //     backgroundColor: alertColor,
         //     content: Text(
         //       toBeginningOfSentenceCase(
         //           e.response!.data["message"].toString())!,
@@ -153,6 +153,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
                               colorTitle: primaryColorWhite,
                               colorBorder: primaryColorWhite,
                               colorHintText: primaryColorWhite.withOpacity(0.4),
+                              colorText: primaryColorWhite,
                               controller: emailController,
                               validator: (value) {
                                 if (value!.isEmpty) {

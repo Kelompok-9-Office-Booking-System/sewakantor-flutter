@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               duration: Duration(seconds: 2),
-              backgroundColor: Colors.greenAccent,
+              backgroundColor: successColor,
               content: Text(
                 'Berhasil Login',
                 textAlign: TextAlign.center,
@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            backgroundColor: Colors.redAccent,
+            backgroundColor: alertColor,
             content: Text(
               e.response!.data["message"].toString(),
               textAlign: TextAlign.center,
@@ -137,6 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                               colorTitle: primaryColorWhite,
                               colorBorder: primaryColorWhite,
                               colorHintText: primaryColorWhite.withOpacity(0.4),
+                              colorText: primaryColorWhite,
                               controller: emailController,
                               validator: (value) {
                                 if (value!.isEmpty) {
@@ -159,6 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                               colorTitle: primaryColorWhite,
                               colorBorder: primaryColorWhite,
                               colorHintText: primaryColorWhite.withOpacity(0.4),
+                              colorText: primaryColorWhite,
                               controller: passwordController,
                               isPasswordField: true,
                               validator: (value) {

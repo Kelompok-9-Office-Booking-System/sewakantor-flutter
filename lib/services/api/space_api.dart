@@ -7,7 +7,7 @@ class SpaceAPI {
     required String token,
   }) async {
     Response responseCoba = await Dio().get(
-      'http://54.211.120.43/api/v1/customer/spaces',
+      'https://sk-api.mbaharip.me/api/v1/customer/spaces',
       queryParameters: {
         'name': name,
       },

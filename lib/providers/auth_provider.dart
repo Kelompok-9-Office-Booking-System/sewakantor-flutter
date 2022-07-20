@@ -148,6 +148,9 @@ class AuthProvider with ChangeNotifier {
 
       _user = UserModel.fromJson(json.decode(userSaved));
 
+      print(_user.email);
+      print(_user.firstName);
+
       // note : End
 
       changeState(AuthState.none);
@@ -167,16 +170,14 @@ class AuthProvider with ChangeNotifier {
   Future<bool> signOut() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      final String? token = prefs.getString('token');
-      print("masuk ke provider dan ini tokenya $token");
-      await AuthApi().signOut(token: token!);
+
       prefs.remove('userSaved');
       prefs.remove('token');
       print('Berhasil Logout');
       return true;
     } catch (e) {
       print(e.toString() + " { disini errornya }");
-      return false;
+      throw e;
     }
   }
 
@@ -188,6 +189,58 @@ class AuthProvider with ChangeNotifier {
       prefs.setString('userSaved', userSaved);
 
       _user = UserModel.fromJson(json.decode(userSaved));
+
+      return true;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<bool> getUserActiveLocal() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+
+      String userSaved = json.encode(_user.toJsonLocal());
+      prefs.setString('userSaved', userSaved);
+
+      _user = UserModel.fromJsonLocal(json.decode(userSaved));
+
+      return true;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<bool> editUserActiveLocal({
+    required String firstName,
+    required String lastName,
+    String? phoneNumber,
+    String? companyName,
+    String? companyEmail,
+    String? country,
+    String? zipCode,
+    String? address,
+  }) async {
+    try {
+      // Edit on local storage not API
+      _user.firstName = firstName;
+      _user.lastName = lastName;
+      _user.phoneNumber = phoneNumber;
+      _user.companyName = companyName;
+      _user.companyEmail = companyEmail;
+      _user.country = country;
+      _user.zipCode = zipCode;
+      _user.address = address;
+      // End of edit
+
+      final prefs = await SharedPreferences.getInstance();
+
+      String userSaved = json.encode(_user.toJsonLocal());
+      prefs.setString('userSaved', userSaved);
+      print(userSaved);
+
+      _user = UserModel.fromJsonLocal(json.decode(userSaved));
+      print("hayo" + _user.address.toString());
 
       return true;
     } catch (e) {

@@ -1,11 +1,18 @@
 class UserModel {
-  late final int? uid;
-  late final String? email;
-  late final String? firstName;
-  late final String? lastName;
-  late final int? roleId;
-  late final String? role;
-  late final String? token;
+  late int? uid;
+  late String? email;
+  late String? firstName;
+  late String? lastName;
+  late int? roleId;
+  late String? role;
+  late String? token;
+  // Optional
+  String? phoneNumber;
+  String? companyName;
+  String? companyEmail;
+  String? country;
+  String? zipCode;
+  String? address;
 
   UserModel({
     required this.uid,
@@ -15,12 +22,21 @@ class UserModel {
     required this.roleId,
     required this.role,
     required this.token,
+    // Optional
+    this.phoneNumber,
+    this.companyName,
+    this.companyEmail,
+    this.country,
+    this.zipCode,
+    this.address,
   });
 
   Map<String, dynamic> toJson() {
     return {
       'data': {
-        'username': email,
+        'email': email,
+        'firstName': firstName,
+        'lastName': lastName,
         'roleId': roleId,
         'role': role,
         'tokenType': 'Bearer',
@@ -29,10 +45,47 @@ class UserModel {
     };
   }
 
+  Map<String, dynamic> toJsonLocal() {
+    return {
+      'data': {
+        'email': email,
+        'firstName': firstName,
+        'lastName': lastName,
+        'roleId': roleId,
+        'role': role,
+        'tokenType': 'Bearer',
+        'token': token,
+        'phoneNumber': phoneNumber,
+        'companyName': companyName,
+        'companyEmail': companyEmail,
+        'country': country,
+        'zipCode': zipCode,
+        'address': address,
+      },
+    };
+  }
+
   UserModel.fromJson(Map<String, dynamic> json) {
-    email = json['data']['username'];
+    email = json['data']['email'];
+    firstName = json['data']['firstName'];
+    lastName = json['data']['lastName'];
     roleId = json['data']['roleId'];
     role = json['data']['role'];
     token = json['data']['token'];
+  }
+
+  UserModel.fromJsonLocal(Map<String, dynamic> json) {
+    email = json['data']['email'];
+    firstName = json['data']['firstName'];
+    lastName = json['data']['lastName'];
+    roleId = json['data']['roleId'];
+    role = json['data']['role'];
+    token = json['data']['token'];
+    phoneNumber = json['data']['phoneNumber'];
+    companyName = json['data']['companyName'];
+    companyEmail = json['data']['companyEmail'];
+    country = json['data']['country'];
+    zipCode = json['data']['zipCode'];
+    address = json['data']['address'];
   }
 }

@@ -43,7 +43,7 @@ class SignUpPageState extends State<SignUpPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               duration: Duration(seconds: 2),
-              backgroundColor: Colors.greenAccent,
+              backgroundColor: successColor,
               content: Text(
                 'Berhasil Daftar',
                 textAlign: TextAlign.center,
@@ -59,7 +59,7 @@ class SignUpPageState extends State<SignUpPage> {
       } on DioError catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            backgroundColor: Colors.redAccent,
+            backgroundColor: alertColor,
             content: Text(
               toBeginningOfSentenceCase(
                   e.response!.data["message"].toString())!,
@@ -75,7 +75,7 @@ class SignUpPageState extends State<SignUpPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             duration: Duration(seconds: 2),
-            backgroundColor: Colors.greenAccent,
+            backgroundColor: successColor,
             content: Text(
               'Berhasil Login',
               textAlign: TextAlign.center,
@@ -171,6 +171,7 @@ class SignUpPageState extends State<SignUpPage> {
                               colorTitle: primaryColorWhite,
                               colorBorder: primaryColorWhite,
                               colorHintText: primaryColorWhite.withOpacity(0.4),
+                              colorText: primaryColorWhite,
                               controller: firstNameController,
                               validator: (value) {
                                 if (value!.isEmpty) {
@@ -196,6 +197,7 @@ class SignUpPageState extends State<SignUpPage> {
                               colorTitle: primaryColorWhite,
                               colorBorder: primaryColorWhite,
                               colorHintText: primaryColorWhite.withOpacity(0.4),
+                              colorText: primaryColorWhite,
                               controller: lastNameController,
                               validator: (value) {
                                 if (value!.isEmpty) {
@@ -221,6 +223,7 @@ class SignUpPageState extends State<SignUpPage> {
                               colorTitle: primaryColorWhite,
                               colorBorder: primaryColorWhite,
                               colorHintText: primaryColorWhite.withOpacity(0.4),
+                              colorText: primaryColorWhite,
                               controller: emailController,
                               validator: (value) {
                                 if (value!.isEmpty) {
@@ -243,6 +246,7 @@ class SignUpPageState extends State<SignUpPage> {
                               colorTitle: primaryColorWhite,
                               colorBorder: primaryColorWhite,
                               colorHintText: primaryColorWhite.withOpacity(0.4),
+                              colorText: primaryColorWhite,
                               controller: passwordController,
                               validator: (value) {
                                 if (value!.isEmpty) {
@@ -266,6 +270,7 @@ class SignUpPageState extends State<SignUpPage> {
                               colorTitle: primaryColorWhite,
                               colorBorder: primaryColorWhite,
                               colorHintText: primaryColorWhite.withOpacity(0.4),
+                              colorText: primaryColorWhite,
                               controller: confirmPasswordController,
                               validator: (value) {
                                 if (value!.isEmpty) {

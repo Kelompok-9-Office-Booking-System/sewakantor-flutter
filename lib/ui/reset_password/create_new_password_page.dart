@@ -34,7 +34,7 @@ class CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             duration: Duration(seconds: 2),
-            backgroundColor: Colors.greenAccent,
+            backgroundColor: successColor,
             content: Text(
               'Berhasil Kirim Email',
               textAlign: TextAlign.center,
@@ -49,7 +49,7 @@ class CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
       } catch (e) {
         // ScaffoldMessenger.of(context).showSnackBar(
         //   SnackBar(
-        //     backgroundColor: Colors.redAccent,
+        //     backgroundColor: alertColor,
         //     content: Text(
         //       toBeginningOfSentenceCase(
         //           e.response!.data["message"].toString())!,
@@ -153,6 +153,7 @@ class CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
                               colorTitle: primaryColorWhite,
                               colorBorder: primaryColorWhite,
                               colorHintText: primaryColorWhite.withOpacity(0.4),
+                              colorText: primaryColorWhite,
                               controller: passwordController,
                               validator: (value) {
                                 if (value!.isEmpty) {
@@ -176,6 +177,7 @@ class CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
                               colorTitle: primaryColorWhite,
                               colorBorder: primaryColorWhite,
                               colorHintText: primaryColorWhite.withOpacity(0.4),
+                              colorText: primaryColorWhite,
                               controller: confirmPasswordController,
                               validator: (value) {
                                 if (value!.isEmpty) {

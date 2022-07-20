@@ -9,9 +9,11 @@ class CustomTextFormField extends StatefulWidget {
   final Color colorBorder;
   final String hintText;
   final Color colorHintText;
+  final Color colorText;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final bool isPasswordField;
+  final bool isEnabled;
 
   const CustomTextFormField({
     required this.title,
@@ -19,9 +21,11 @@ class CustomTextFormField extends StatefulWidget {
     required this.colorBorder,
     required this.hintText,
     required this.colorHintText,
+    required this.colorText,
     this.controller,
     this.validator,
     this.isPasswordField = false,
+    this.isEnabled = true,
     Key? key,
   }) : super(key: key);
 
@@ -56,7 +60,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               horizontal: 16,
             ),
             decoration: BoxDecoration(
-              // color: Colors.red,
+              color: widget.isEnabled ? Colors.transparent : primaryColorSilver,
               borderRadius: BorderRadius.circular(
                 10,
               ),
@@ -72,12 +76,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     child: Stack(
                       children: [
                         TextFormField(
+                          enabled: widget.isEnabled,
                           controller: widget.controller,
                           obscureText:
                               !widget.isPasswordField ? false : hidePassword,
                           // controller: emailController,
                           style: primaryTextStyle.copyWith(
-                            color: primaryColorWhite,
+                            color: widget.colorText,
                           ),
                           decoration: InputDecoration(
                             isCollapsed: true,

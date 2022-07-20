@@ -169,6 +169,7 @@ class _HomePageState extends State<HomePage> {
                             colorTitle: primaryColorWhite,
                             colorBorder: primaryColorWhite,
                             colorHintText: primaryColorWhite.withOpacity(0.4),
+                            colorText: primaryColorWhite,
                             hintText: 'Find location',
                           ),
                           SizedBox(

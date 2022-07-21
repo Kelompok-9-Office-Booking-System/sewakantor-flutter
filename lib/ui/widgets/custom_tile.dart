@@ -1,12 +1,16 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:sewakantor_flutter/models/space_model.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
+import 'package:sewakantor_flutter/utils/currency_format.dart';
 
 class CustomTile extends StatelessWidget {
   final VoidCallback? onTap;
+  final SpaceModel? space;
   const CustomTile({
     this.onTap,
+    required this.space,
     Key? key,
   }) : super(key: key);
 
@@ -24,6 +28,10 @@ class CustomTile extends StatelessWidget {
               height: 110,
               width: 90,
               decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage('${space!.thumbnail}'),
+                  fit: BoxFit.cover,
+                ),
                 color: primaryColorNobel,
                 borderRadius: BorderRadius.circular(5),
               ),
@@ -40,7 +48,7 @@ class CustomTile extends StatelessWidget {
                       // color: Colors.red,
                       // width: double.infinity,
                       child: Text(
-                        'BCA Tower',
+                        '${space!.name}',
                         style: primaryTextStyle.copyWith(
                           fontSize: 14,
                           fontWeight: semiBold,
@@ -57,7 +65,7 @@ class CustomTile extends StatelessWidget {
                           color: primaryColorBlackRussian,
                         ),
                         Text(
-                          '143',
+                          '${space!.unit}',
                           style: primaryTextStyle.copyWith(
                             fontSize: 14,
                             fontWeight: reguler,
@@ -72,7 +80,7 @@ class CustomTile extends StatelessWidget {
                           color: secondaryColorTengerineYellow,
                         ),
                         Text(
-                          '4.7',
+                          '${space!.rating}',
                           style: primaryTextStyle.copyWith(
                             fontSize: 14,
                             fontWeight: medium,
@@ -83,7 +91,7 @@ class CustomTile extends StatelessWidget {
                     ),
                     Container(
                       child: Text(
-                        '50/F, Menara BCA Grand Indonesia, Jakarta, 10310',
+                        '${space!.address}',
                         style: primaryTextStyle.copyWith(
                           fontSize: 14,
                           fontWeight: reguler,
@@ -96,7 +104,7 @@ class CustomTile extends StatelessWidget {
                     ),
                     Container(
                       child: Text(
-                        'Start from Rp. 2.600.000',
+                        'Start from ${CurrencyFormat.convertToIdr(space!.price!, 0)}',
                         style: primaryTextStyle.copyWith(
                           fontSize: 14,
                           fontWeight: semiBold,

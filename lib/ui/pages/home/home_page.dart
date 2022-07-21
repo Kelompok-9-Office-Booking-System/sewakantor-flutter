@@ -505,6 +505,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     Widget bestDealProducts() {
+      SpaceProvider spaceProvider = Provider.of<SpaceProvider>(context);
       return Container(
         margin: EdgeInsets.only(
           left: 35,
@@ -514,12 +515,27 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i < spaceProvider.spaces.length; i++)
               CustomTile(
+                space: spaceProvider.spaces[i],
                 onTap: () {
+                  print(spaceProvider.spaces[i].name);
                   Navigator.pushNamed(
                     context,
                     '/detail-room-page',
+                    arguments: SpaceModel(
+                      id: spaceProvider.spaces[i].id,
+                      name: spaceProvider.spaces[i].name,
+                      thumbnail: spaceProvider.spaces[i].thumbnail,
+                      description: spaceProvider.spaces[i].description,
+                      address: spaceProvider.spaces[i].address,
+                      unit: spaceProvider.spaces[i].unit,
+                      rating: spaceProvider.spaces[i].rating,
+                      price: spaceProvider.spaces[i].price,
+                      types: spaceProvider.spaces[i].types,
+                      facilities: spaceProvider.spaces[i].facilities,
+                      nearbyPlaces: spaceProvider.spaces[i].nearbyPlaces,
+                    ),
                   );
                 },
               ),
@@ -529,6 +545,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     Widget suggestionsProducts() {
+      SpaceProvider spaceProvider = Provider.of<SpaceProvider>(context);
       return Container(
         margin: EdgeInsets.only(
           left: 35,
@@ -538,12 +555,27 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i < spaceProvider.spaces.length; i++)
               CustomTile(
+                space: spaceProvider.spaces[i],
                 onTap: () {
+                  print(spaceProvider.spaces[i].name);
                   Navigator.pushNamed(
                     context,
                     '/detail-room-page',
+                    arguments: SpaceModel(
+                      id: spaceProvider.spaces[i].id,
+                      name: spaceProvider.spaces[i].name,
+                      thumbnail: spaceProvider.spaces[i].thumbnail,
+                      description: spaceProvider.spaces[i].description,
+                      address: spaceProvider.spaces[i].address,
+                      unit: spaceProvider.spaces[i].unit,
+                      rating: spaceProvider.spaces[i].rating,
+                      price: spaceProvider.spaces[i].price,
+                      types: spaceProvider.spaces[i].types,
+                      facilities: spaceProvider.spaces[i].facilities,
+                      nearbyPlaces: spaceProvider.spaces[i].nearbyPlaces,
+                    ),
                   );
                 },
               ),

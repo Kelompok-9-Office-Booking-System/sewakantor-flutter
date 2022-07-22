@@ -688,11 +688,11 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     SpaceProvider spaceProvider = Provider.of<SpaceProvider>(context);
-    List<String> matchQuery = [];
+    List<SpaceModel> matchQuery = [];
 
-    for (var placeName in spaceProvider.spaces) {
-      if (placeName.name!.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(placeName.name!);
+    for (var spaceModel in spaceProvider.spaces) {
+      if (spaceModel.name!.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(spaceModel);
       }
     }
 
@@ -722,24 +722,26 @@ class CustomSearchDelegate extends SearchDelegate {
                 var result = matchQuery[index];
                 print(result);
                 return CustomTile(
-                  space: spaceProvider.spaces[index],
+                  space: result,
                   onTap: () {
-                    print(spaceProvider.spaces[index].name);
+                    print(result.name);
+                    print(result);
+                    print(matchQuery);
                     Navigator.pushNamed(
                       context,
                       '/detail-room-page',
                       arguments: SpaceModel(
-                        id: spaceProvider.spaces[index].id,
-                        name: spaceProvider.spaces[index].name,
-                        thumbnail: spaceProvider.spaces[index].thumbnail,
-                        description: spaceProvider.spaces[index].description,
-                        address: spaceProvider.spaces[index].address,
-                        unit: spaceProvider.spaces[index].unit,
-                        rating: spaceProvider.spaces[index].rating,
-                        price: spaceProvider.spaces[index].price,
-                        types: spaceProvider.spaces[index].types,
-                        facilities: spaceProvider.spaces[index].facilities,
-                        nearbyPlaces: spaceProvider.spaces[index].nearbyPlaces,
+                        id: result.id,
+                        name: result.name,
+                        thumbnail: result.thumbnail,
+                        description: result.description,
+                        address: result.address,
+                        unit: result.unit,
+                        rating: result.rating,
+                        price: result.price,
+                        types: result.types,
+                        facilities: result.facilities,
+                        nearbyPlaces: result.nearbyPlaces,
                       ),
                     );
                   },
@@ -752,11 +754,11 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     SpaceProvider spaceProvider = Provider.of<SpaceProvider>(context);
-    List<String> matchQuery = [];
+    List<SpaceModel> matchQuery = [];
 
-    for (var placeName in spaceProvider.spaces) {
-      if (placeName.name!.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(placeName.name!);
+    for (var spaceModel in spaceProvider.spaces) {
+      if (spaceModel.name!.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(spaceModel);
       }
     }
 
@@ -786,24 +788,26 @@ class CustomSearchDelegate extends SearchDelegate {
                 var result = matchQuery[index];
                 print(result);
                 return CustomTile(
-                  space: spaceProvider.spaces[index],
+                  space: result,
                   onTap: () {
-                    print(spaceProvider.spaces[index].name);
+                    print(result.name);
+                    print(result);
+                    print(matchQuery);
                     Navigator.pushNamed(
                       context,
                       '/detail-room-page',
                       arguments: SpaceModel(
-                        id: spaceProvider.spaces[index].id,
-                        name: spaceProvider.spaces[index].name,
-                        thumbnail: spaceProvider.spaces[index].thumbnail,
-                        description: spaceProvider.spaces[index].description,
-                        address: spaceProvider.spaces[index].address,
-                        unit: spaceProvider.spaces[index].unit,
-                        rating: spaceProvider.spaces[index].rating,
-                        price: spaceProvider.spaces[index].price,
-                        types: spaceProvider.spaces[index].types,
-                        facilities: spaceProvider.spaces[index].facilities,
-                        nearbyPlaces: spaceProvider.spaces[index].nearbyPlaces,
+                        id: result.id,
+                        name: result.name,
+                        thumbnail: result.thumbnail,
+                        description: result.description,
+                        address: result.address,
+                        unit: result.unit,
+                        rating: result.rating,
+                        price: result.price,
+                        types: result.types,
+                        facilities: result.facilities,
+                        nearbyPlaces: result.nearbyPlaces,
                       ),
                     );
                   },

@@ -5,7 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
 
 class CustomChatTile extends StatelessWidget {
-  const CustomChatTile({Key? key}) : super(key: key);
+  String? nama;
+  String? imgProfile;
+  String? msg;
+  String? num;
+  String? time;
+
+  CustomChatTile({
+    required this.nama,
+    required this.imgProfile,
+    required this.msg,
+    required this.num,
+    required this.time,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +39,9 @@ class CustomChatTile extends StatelessWidget {
                 height: 50,
                 width: 50,
                 decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('$imgProfile'),
+                  ),
                   color: primaryColorNobel,
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -46,7 +62,7 @@ class CustomChatTile extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              'BCA Tower',
+                              '$nama',
                               style: primaryTextStyle.copyWith(
                                 fontSize: 14,
                                 fontWeight: semiBold,
@@ -60,7 +76,7 @@ class CustomChatTile extends StatelessWidget {
                             width: 10,
                           ),
                           Text(
-                            '11.37 PM',
+                            '$time',
                             style: primaryTextStyle.copyWith(
                               fontSize: 12,
                               fontWeight: reguler,
@@ -83,7 +99,7 @@ class CustomChatTile extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              'Hello, my name is Lion as customer service. How can I help you? Hello, my name is Lion as customer service. How can I help you? ',
+                              '$msg',
                               style: primaryTextStyle.copyWith(
                                 fontSize: 12,
                                 fontWeight: reguler,
@@ -105,7 +121,7 @@ class CustomChatTile extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                '12',
+                                '$num',
                                 style: primaryTextStyle.copyWith(
                                   fontSize: 13,
                                   fontWeight: medium,

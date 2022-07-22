@@ -221,7 +221,12 @@ class DetailRoomPage extends StatelessWidget {
             height: 7,
           ),
           Container(
-            color: primaryColorGrey,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/room-plan.png'),
+              ),
+              color: primaryColorGrey,
+            ),
             width: double.infinity,
             height: 180,
           ),
@@ -245,7 +250,13 @@ class DetailRoomPage extends StatelessWidget {
             height: 7,
           ),
           Container(
-            color: primaryColorGrey,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/location-map.png'),
+                fit: BoxFit.cover,
+              ),
+              color: primaryColorGrey,
+            ),
             width: double.infinity,
             height: 160,
           ),
@@ -294,6 +305,26 @@ class DetailRoomPage extends StatelessWidget {
     }
 
     Widget ourReviewsAndCard() {
+      List<Map> reviewer = [
+        {
+          'imgProfile': 'assets/images/reviewer/reviewer1.jpeg',
+          'rating': '4.7',
+          'nama': 'Jane Williamson',
+          'review': 'Big Spaces',
+        },
+        {
+          'imgProfile': 'assets/images/reviewer/reviewer2.jpeg',
+          'rating': '4.2',
+          'nama': 'Micahael Louis',
+          'review': 'Good Environment',
+        },
+        {
+          'imgProfile': 'assets/images/reviewer/reviewer3.jpeg',
+          'rating': '4.0',
+          'nama': 'Perry Caty',
+          'review': 'Not Bad',
+        },
+      ];
       return Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -313,9 +344,14 @@ class DetailRoomPage extends StatelessWidget {
               height: 70,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 5,
+                itemCount: reviewer.length,
                 itemBuilder: (context, index) {
-                  return CustomCardReviews();
+                  return CustomCardReviews(
+                    imgProfile: reviewer[index]['imgProfile'],
+                    rating: reviewer[index]['rating'],
+                    nama: reviewer[index]['nama'],
+                    review: reviewer[index]['review'],
+                  );
                 },
               ),
             )
@@ -729,64 +765,80 @@ class DetailRoomPage extends StatelessWidget {
             Container(
               height: 400,
               width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage('${thumbnail}'),
-                  fit: BoxFit.cover,
-                ),
-                // color: Colors.amber,
-              ),
-              padding: EdgeInsets.only(
-                left: 30,
-                top: 45,
-                right: 30,
-              ),
               child: Stack(
                 children: [
                   Align(
-                    alignment: Alignment.topLeft,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        // padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1.5,
-                            color: primaryColorBlackRussian,
+                    alignment: Alignment.center,
+                    child: Center(
+                      child: CachedNetworkImage(
+                        height: 400,
+                        width: double.infinity,
+                        imageUrl: "${thumbnail}",
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 30,
+                      top: 45,
+                      right: 30,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          // padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1.5,
+                              color: primaryColorBlackRussian,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5),
+                            ),
                           ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5),
+                          child: Icon(
+                            Icons.chevron_left,
+                            size: 30,
                           ),
-                        ),
-                        child: Icon(
-                          Icons.chevron_left,
-                          size: 30,
                         ),
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: InkWell(
-                      onTap: () {
-                        print('Share');
-                      },
-                      child: Container(
-                        // padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1.5,
-                            color: primaryColorBlackRussian,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 30,
+                      top: 45,
+                      right: 30,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: InkWell(
+                        onTap: () {
+                          print('Share');
+                        },
+                        child: Container(
+                          // padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1.5,
+                              color: primaryColorBlackRussian,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5),
+                            ),
                           ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5),
+                          child: Icon(
+                            Icons.share,
+                            size: 30,
                           ),
-                        ),
-                        child: Icon(
-                          Icons.share,
-                          size: 30,
                         ),
                       ),
                     ),

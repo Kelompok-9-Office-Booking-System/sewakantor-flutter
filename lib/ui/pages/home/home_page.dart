@@ -3,6 +3,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:sewakantor_flutter/models/space_model.dart';
 import 'package:sewakantor_flutter/models/user_model.dart';
@@ -24,6 +25,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController searchSpaceController = TextEditingController(text: '');
+
   @override
   void initState() {
     super.initState();
@@ -377,37 +380,48 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              margin: EdgeInsets.symmetric(
-                  // horizontal: defaultMargin,
+            InkWell(
+              onTap: () {
+                print('masuk ke halaman pencarian');
+                showSearch(
+                  context: context,
+                  delegate: CustomSearchDelegate(),
+                );
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(
+                    // horizontal: defaultMargin,
+                    ),
+                padding: EdgeInsets.only(left: 5, top: 0, right: 5, bottom: 0),
+                // height: 45,
+                width: MediaQuery.of(context).size.width - 70 - 50 - 10,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    width: 1.5,
+                    color: primaryColorGrey,
                   ),
-              padding: EdgeInsets.only(left: 5, top: 0, right: 5, bottom: 0),
-              // height: 45,
-              width: MediaQuery.of(context).size.width - 70 - 50 - 10,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  width: 1.5,
-                  color: primaryColorGrey,
                 ),
-              ),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search space or location',
-                  hintStyle: primaryTextStyle.copyWith(
-                    fontWeight: medium,
-                  ),
-                  border: InputBorder.none,
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.only(right: 0),
-                    child: InkWell(
-                      onTap: () {
-                        print('CARI');
-                      },
-                      child: Icon(
-                        Icons.search,
-                        color: primaryColorBlack,
-                        size: 30,
+                child: TextField(
+                  enabled: false,
+                  controller: searchSpaceController,
+                  decoration: InputDecoration(
+                    hintText: 'Search space or location',
+                    hintStyle: primaryTextStyle.copyWith(
+                      fontWeight: medium,
+                    ),
+                    border: InputBorder.none,
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.only(right: 0),
+                      child: InkWell(
+                        onTap: () {
+                          print('CARI');
+                        },
+                        child: Icon(
+                          Icons.search,
+                          color: primaryColorBlack,
+                          size: 30,
+                        ),
                       ),
                     ),
                   ),
@@ -614,7 +628,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     headTitleAndViewAll(title: 'Best Deals'),
                     SizedBox(
-                      height: 25,
+                      height: 5,
                     ),
                     bestDealProducts(),
                     SizedBox(
@@ -644,6 +658,158 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       body: bodyLoaded(),
+    );
+  }
+}
+
+class CustomSearchDelegate extends SearchDelegate {
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    SpaceProvider spaceProvider = Provider.of<SpaceProvider>(context);
+    List<String> matchQuery = [];
+
+    for (var placeName in spaceProvider.spaces) {
+      if (placeName.name!.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(placeName.name!);
+      }
+    }
+
+    return Container(
+      margin: EdgeInsets.only(
+        top: 20,
+        left: 35,
+        right: 35,
+      ),
+      child: matchQuery.isEmpty
+          ? Column(
+              children: [
+                Lottie.asset('assets/icon/lottie-not-found-search.json'),
+                Text(
+                  'Data Not Found',
+                  style: primaryTextStyle.copyWith(
+                    fontSize: 28,
+                    fontWeight: semiBold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            )
+          : ListView.builder(
+              itemCount: matchQuery.length,
+              itemBuilder: (context, index) {
+                var result = matchQuery[index];
+                print(result);
+                return CustomTile(
+                  space: spaceProvider.spaces[index],
+                  onTap: () {
+                    print(spaceProvider.spaces[index].name);
+                    Navigator.pushNamed(
+                      context,
+                      '/detail-room-page',
+                      arguments: SpaceModel(
+                        id: spaceProvider.spaces[index].id,
+                        name: spaceProvider.spaces[index].name,
+                        thumbnail: spaceProvider.spaces[index].thumbnail,
+                        description: spaceProvider.spaces[index].description,
+                        address: spaceProvider.spaces[index].address,
+                        unit: spaceProvider.spaces[index].unit,
+                        rating: spaceProvider.spaces[index].rating,
+                        price: spaceProvider.spaces[index].price,
+                        types: spaceProvider.spaces[index].types,
+                        facilities: spaceProvider.spaces[index].facilities,
+                        nearbyPlaces: spaceProvider.spaces[index].nearbyPlaces,
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    SpaceProvider spaceProvider = Provider.of<SpaceProvider>(context);
+    List<String> matchQuery = [];
+
+    for (var placeName in spaceProvider.spaces) {
+      if (placeName.name!.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(placeName.name!);
+      }
+    }
+
+    return Container(
+      margin: EdgeInsets.only(
+        top: 20,
+        left: 35,
+        right: 35,
+      ),
+      child: matchQuery.isEmpty
+          ? Column(
+              children: [
+                Lottie.asset('assets/icon/lottie-not-found-search.json'),
+                Text(
+                  'Data Not Found',
+                  style: primaryTextStyle.copyWith(
+                    fontSize: 28,
+                    fontWeight: semiBold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            )
+          : ListView.builder(
+              itemCount: matchQuery.length,
+              itemBuilder: (context, index) {
+                var result = matchQuery[index];
+                print(result);
+                return CustomTile(
+                  space: spaceProvider.spaces[index],
+                  onTap: () {
+                    print(spaceProvider.spaces[index].name);
+                    Navigator.pushNamed(
+                      context,
+                      '/detail-room-page',
+                      arguments: SpaceModel(
+                        id: spaceProvider.spaces[index].id,
+                        name: spaceProvider.spaces[index].name,
+                        thumbnail: spaceProvider.spaces[index].thumbnail,
+                        description: spaceProvider.spaces[index].description,
+                        address: spaceProvider.spaces[index].address,
+                        unit: spaceProvider.spaces[index].unit,
+                        rating: spaceProvider.spaces[index].rating,
+                        price: spaceProvider.spaces[index].price,
+                        types: spaceProvider.spaces[index].types,
+                        facilities: spaceProvider.spaces[index].facilities,
+                        nearbyPlaces: spaceProvider.spaces[index].nearbyPlaces,
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
     );
   }
 }

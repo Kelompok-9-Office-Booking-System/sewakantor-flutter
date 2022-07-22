@@ -1,5 +1,6 @@
 // ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sewakantor_flutter/models/space_model.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
@@ -30,12 +31,22 @@ class CustomCard extends StatelessWidget {
               height: 95,
               width: 180,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage('${space!.thumbnail}'),
-                  fit: BoxFit.cover,
-                ),
                 color: primaryColorNobel,
                 borderRadius: BorderRadius.circular(5),
+              ),
+              child: Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: CachedNetworkImage(
+                    height: 95,
+                    width: 180,
+                    imageUrl: "${space!.thumbnail}",
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                        Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                ),
               ),
             ),
             SizedBox(

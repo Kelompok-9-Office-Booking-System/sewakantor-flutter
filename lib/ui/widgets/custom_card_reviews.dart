@@ -4,7 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:sewakantor_flutter/shared/theme.dart';
 
 class CustomCardReviews extends StatelessWidget {
-  const CustomCardReviews({Key? key}) : super(key: key);
+  String? imgProfile;
+  String? rating;
+  String? nama;
+  String? review;
+  CustomCardReviews({
+    required this.imgProfile,
+    required this.rating,
+    required this.nama,
+    required this.review,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +36,9 @@ class CustomCardReviews extends StatelessWidget {
             height: 50,
             width: 50,
             decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('$imgProfile'),
+              ),
               color: primaryColorGrey,
               borderRadius: BorderRadius.circular(10),
             ),
@@ -43,7 +56,7 @@ class CustomCardReviews extends StatelessWidget {
                     color: secondaryColorTengerineYellow,
                   ),
                   Text(
-                    '4.7',
+                    '$rating',
                     style: primaryTextStyle.copyWith(
                       fontSize: 16,
                       fontWeight: medium,
@@ -53,7 +66,7 @@ class CustomCardReviews extends StatelessWidget {
                 ],
               ),
               Text(
-                'Cameron Williamson',
+                '$nama',
                 style: primaryTextStyle.copyWith(
                   fontSize: 16,
                   fontWeight: medium,
@@ -61,7 +74,7 @@ class CustomCardReviews extends StatelessWidget {
                 ),
               ),
               Text(
-                'Nice spaces',
+                '$review',
                 style: primaryTextStyle.copyWith(
                   fontSize: 14,
                   fontWeight: medium,
